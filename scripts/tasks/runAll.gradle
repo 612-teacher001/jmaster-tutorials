@@ -1,0 +1,5 @@
+task runAll {
+    dependsOn ':tutorials-root:appRun',
+               ':web-tutorial:appRun',
+               ':aop-tutorial:appRun'
+}

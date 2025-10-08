@@ -1,0 +1,11 @@
+rootProject.name = 'jmaster-tutorials'
+
+// サブプロジェクト登録
+include 'tutorials-root'
+include 'web-tutorial'
+include 'aop-tutorial'
+
+// ディレクトリを明示的に指定
+project(':tutorials-root').projectDir = file('tutorials/tutorials-root')
+project(':web-tutorial').projectDir = file('tutorials/web-tutorial')
+project(':aop-tutorial').projectDir = file('tutorials/aop-tutorial')

@@ -1,0 +1,7 @@
+// 現時点ではルートプロジェクトの設定を継承。
+// 将来的に web-tutorial 固有の設定を追加する場合はここに記述。
+gretty {
+    contextPath = '/tutorials-root'  // URL に対応
+    httpPort = 8080 // デフォルトのまま
+    // もしポートをサブプロジェクトごとに変えたい場合は serverPort = 8081 など
+}
