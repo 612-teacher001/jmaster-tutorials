@@ -2,7 +2,13 @@
 // 将来的に web-tutorial 固有の設定を追加する場合はここに記述。
 gretty {
     contextPath = '/web-tutorial'  // URL に対応
-    httpPort = 8081
-    // もしポートをサブプロジェクトごとに変えたい場合は serverPort = 8081 など
+    httpPort = 8081 // もしポートをサブプロジェクトごとに変えたい場合は serverPort = 8081 など
+    inplaceMode = 'hard'
+    extraResourceBases = ["${rootProject.projectDir}/common-web-resources/src/main/webapp"]
 }
 
+war {
+    from("${rootProject.projectDir}/common-web-resources/src/main/webapp") {
+        into '' // WAR内のルートにコピー（＝WEB-INF配下をそのまま含める）
+    }
+}

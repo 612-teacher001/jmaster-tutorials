@@ -25,10 +25,10 @@ public class TopServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		// response.getWriter().append("Served at: ").append(request.getContextPath());
 		List<String> seasons = new ArrayList<>();
-		seasons.add("spring");
-		seasons.add("summer");
-		seasons.add("autumn");
-		seasons.add("winter");
+		seasons.add("spring-aop");
+		seasons.add("summer-aop");
+		seasons.add("autumn-aop");
+		seasons.add("winter-aop");
 		request.setAttribute("seasons", seasons);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/");
 		dispatcher.forward(request, response);

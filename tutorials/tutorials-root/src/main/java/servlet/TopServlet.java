@@ -1,8 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -24,12 +22,7 @@ public class TopServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// response.getWriter().append("Served at: ").append(request.getContextPath());
-		List<String> seasons = new ArrayList<>();
-		seasons.add("spring");
-		seasons.add("summer");
-		seasons.add("autumn");
-		seasons.add("winter");
-		request.setAttribute("seasons", seasons);
+		request.setCharacterEncoding("utf-8");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/");
 		dispatcher.forward(request, response);
 	}
