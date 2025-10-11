@@ -30,6 +30,12 @@ subprojects {
 	gretty {
 		servletContainer = 'tomcat10'
 	}
+    // common-webのwebapp内容を追加
+//    war {
+//        from(project(":common-web-resources").file("src/main/webapp/")) {
+//            into "/WEB-INF/"
+//        }
+//    }
 
 	sourceSets {
 	    main {
