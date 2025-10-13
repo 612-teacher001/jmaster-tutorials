@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>表示確認用リンク</title>
+	<style>
+		html {
+		  font-size: 62.5%;
+		}
+
+		body {
+		  color: dimgray;
+		  font-size: 1.4rem;
+		}
+
+		h1 {
+		  padding-left: 26.15rem;
+		  font-size: 135%;
+		}
+		h2, h3 {
+		  font-size: 115%;
+		}
+		
+		p {
+			margin: 0 26.15rem;
+		}
+
+		table, th, td {
+		  border-width: 0;
+		}
+
+		table {
+		  border-collapse: collapse;
+		  margin: 0 auto;
+		}
+
+		caption {
+		  font-size: 135%;
+		  font-weight: bold;
+		  text-align: left;
+		  padding: 0.75rem 1.25rem;
+		}
+
+		th, td {
+		  padding: 0.25rem 1.25rem 0.5rem;
+		}
+
+		tr:nth-child(even) {
+		  background-color: lightgray
+		}
+
+		td[colspan] {
+		  color: dimgray;
+		  background-color: white;
+		  padding-top: 1.75rem;
+		  font-size: 115%;
+		  font-weight: bold;
+		  text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<h1>表示確認用リンク</h1>
+	<p>
+		このページはアプリケーションを開発していく過程で表示確認を行う際に必要となるURLの入力を低減するためのリンク集です。<br />
+		チュートリアル計画表から作成しているので、実際には初期表示用のURLだけで十分です。
+	</p>
+	<table border="1">
+		<!-- <caption>表示確認用リンク</caption>	 -->
+		<tr>
+			<td colspan="3">T0.00：プロジェクト構築</td>
+		</tr>
+		<tr>
+			<td colspan="3">T1.00：基本機能</td>
+		</tr>
+		<tr>
+			<td>T1.10</td>
+			<td>JSPでアプリケーションタイトルを表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/BasicServlet">http://localhost:8080/tutorials-root/BasicServlet</a></td>
+		</tr>
+		<tr>
+			<td>T1.20</td>
+			<td>入力部品を配置したページを表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/BasicServlet/input">http://localhost:8080/tutorials-root/BasicServlet/input</a></td>
+		</tr>
+		<tr>
+			<td>T1.30</td>
+			<td>入力画面のボタンクリックによる画面遷移</td>
+			<td><a href="http://localhost:8080/tutorials-root/BasicServlet/result">http://localhost:8080/tutorials-root/BasicServlet/result</a></td>
+		</tr>
+		<tr>
+			<td colspan="3">T2.00：共通機能</td>
+		</tr>
+		<tr>
+			<td>T2.10</td>
+			<td>商品を全件検索結果を表示</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list">http://localhost:8080/tutorials-root/ProductServlet/list</a></td>
+		</tr>
+		<tr>
+			<td>T2.20</td>
+			<td>選択入力値による商品検索結果を表示</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list/?categoryId=">http://localhost:8080/tutorials-root/ProductServlet/list/?categoryId=</a></td>
+		</tr>
+		<tr>
+			<td>T2.30</td>
+			<td>並べ替え指定による検索結果を表示</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list/?keyword=">http://localhost:8080/tutorials-root/ProductServlet/list/?keyword=</a></td>
+		</tr>
+		<tr>
+			<td>T2.40</td>
+			<td>キーワード入力による検索結果を表示</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list/?keyword=&maxPrice=">http://localhost:8080/tutorials-root/ProductServlet/list/?keyword=&maxPrice=</a></td>
+		</tr>
+		<tr>
+			<td>T2.50</td>
+			<td>範囲指定による検索結果を表示</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list/?keyword=&maxPrice=&sort=">http://localhost:8080/tutorials-root/ProductServlet/list/?keyword=&maxPrice=&sort=</a></td>
+		</tr>
+		<tr>
+			<td colspan="3">T3.00：商品管理</td>
+		</tr>
+		<tr>
+			<td>T3.11</td>
+			<td>商品登録画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/insert/?categoryId=&name=&price=&quantity=">http://localhost:8080/tutorials-root/ProductServlet/insert/?categoryId=&name=&price=&quantity=</a></td>
+		</tr>
+		<tr>
+			<td>T3.12</td>
+			<td>登録内容確認画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/insert/?categoryId=&name=&price=&quantity=">http://localhost:8080/tutorials-root/ProductServlet/insert/?categoryId=&name=&price=&quantity=</a></td>
+		</tr>
+		<tr>
+			<td>T3.13</td>
+			<td>商品を登録する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/update">http://localhost:8080/tutorials-root/ProductServlet/update</a></td>
+		</tr>
+		<tr>
+			<td>T3.21</td>
+			<td>商品情報の変更画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/update/?categoryId=&name=&price=&quantity=">http://localhost:8080/tutorials-root/ProductServlet/update/?categoryId=&name=&price=&quantity=</a></td>
+		</tr>
+		<tr>
+			<td>T3.22</td>
+			<td>変更内容確認画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/update/?categoryId=&name=&price=&quantity=">http://localhost:8080/tutorials-root/ProductServlet/update/?categoryId=&name=&price=&quantity=</a></td>
+		</tr>
+		<tr>
+			<td>T3.23</td>
+			<td>商品情報を更新する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/delete/?id=">http://localhost:8080/tutorials-root/ProductServlet/delete/?id=</a></td>
+		</tr>
+		<tr>
+			<td>T3.31</td>
+			<td>削除する商品確認画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/insert">http://localhost:8080/tutorials-root/ProductServlet/insert</a></td>
+		</tr>
+		<tr>
+			<td>T3.32</td>
+			<td>商品を削除する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/delete/?id=">http://localhost:8080/tutorials-root/ProductServlet/delete/?id=</a></td>
+		</tr>
+		<tr>
+			<td colspan="3">T4.00：カテゴリ管理</td>
+		</tr>
+		<tr>
+			<td>T4.11</td>
+			<td>カテゴリ登録画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/insert">http://localhost:8080/tutorials-root/CategoryServlet/insert</a></td>
+		</tr>
+		<tr>
+			<td>T4.12</td>
+			<td>カテゴリ内容確認画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/insert/?name=">http://localhost:8080/tutorials-root/CategoryServlet/insert/?name=</a></td>
+		</tr>
+		<tr>
+			<td>T4.13</td>
+			<td>カテゴリ登録する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/insert/?name=">http://localhost:8080/tutorials-root/CategoryServlet/insert/?name=</a></td>
+		</tr>
+		<tr>
+			<td>T4.21</td>
+			<td>カテゴリ変更画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/update">http://localhost:8080/tutorials-root/CategoryServlet/update</a></td>
+		</tr>
+		<tr>
+			<td>T4.22</td>
+			<td>変更内容確認画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/update/?id=">http://localhost:8080/tutorials-root/CategoryServlet/update/?id=</a></td>
+		</tr>
+		<tr>
+			<td>T4.23</td>
+			<td>カテゴリを更新する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/update/?id=&name=">http://localhost:8080/tutorials-root/CategoryServlet/update/?id=&name=</a></td>
+		</tr>
+		<tr>
+			<td>T4.31</td>
+			<td>削除するカテゴリ確認画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/delete/?id=">http://localhost:8080/tutorials-root/CategoryServlet/delete/?id=</a></td>
+		</tr>
+		<tr>
+			<td>T4.32</td>
+			<td>カテゴリを削除する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/delete/?id=">http://localhost:8080/tutorials-root/CategoryServlet/delete/?id=</a></td>
+		</tr>
+	</table>
+</body>
+</html>
