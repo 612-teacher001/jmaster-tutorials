@@ -9,3 +9,32 @@ body {
 	font-size: 1.4rem;
 }
 
+table.enquete,
+table.enquete th,
+table.enquete td {
+  border: 0;
+  border-style: none;
+  font-weight: normal;
+}
+
+table.enquete th,
+table.enquete td {
+	padding: 0.35rem 0.75rem;
+}
+
+table.enquete th {
+	background-color: lightgray;
+	font-weight: bold;
+	text-align: right;
+}
+
+table.enquete td[colspan="2"] {
+	padding-top: 1.0rem;
+	text-align: center;
+}
+
+button {
+	color: dimgray;
+	width: 7.5rem;
+	font-weight: bold;
+}
