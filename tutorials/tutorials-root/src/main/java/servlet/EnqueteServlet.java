@@ -36,4 +36,38 @@ public class EnqueteServlet extends HttpServlet {
 		
 	}
 
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// リクエストパラメータの文字コードを設定
+		request.setCharacterEncoding("utf-8");
+		
+		// リクエストパラメータを取得
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		String gender = request.getParameter("gender");
+		String age = request.getParameter("age");
+		String[] languages = request.getParameterValues("languages");
+		String description = request.getParameter("description");
+		
+		// 表示するメッセージを変数に代入
+		String message = "送信されたデータは以下の通りです：";
+		
+		// リクエストスコープにパラメータを登録
+		request.setAttribute("name", name);
+		request.setAttribute("email", email);
+		request.setAttribute("gender", gender);
+		request.setAttribute("age", age);
+		request.setAttribute("languages", languages);
+		request.setAttribute("description", description);
+		// リクエストスコープにメッセージを登録
+		request.setAttribute("message", message);
+		
+		// 遷移先URLの設定：アンケートページ
+		String nextPage = "/WEB-INF/views/enquete/result.jsp";
+		
+		// 画面遷移
+		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
+		dispatcher.forward(request, response);
+	}
+
 }
