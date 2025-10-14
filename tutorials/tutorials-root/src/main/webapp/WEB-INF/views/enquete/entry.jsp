@@ -40,7 +40,7 @@
 					<th>年代</th>
 					<td>
 						<!-- セレクトボックス：排他的選択 -->
-						<select name="ages">
+						<select name="age">
 							<option value="00">10代未満</option>
 							<option value="10">10代</option>
 							<option value="20">20代</option>
