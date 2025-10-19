@@ -1,0 +1,3 @@
+# SASS関連ファイル
+sass/**/dist
+*.css.map
