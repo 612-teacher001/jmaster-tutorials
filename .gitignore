@@ -72,8 +72,6 @@ bin/
 
 # Sass キャッシュ
 .sass-cache/
-sass/**/dist
-sass/**/*.map
 
 # VSCode
 .vscode/
