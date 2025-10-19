@@ -1,0 +1,32 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "tutorials//tutorials-root"
+		}
+	],
+	"settings": {
+		// === Live Sass Compiler 設定 ===
+		"liveSassCompile.settings.formats": [{
+			"format": "expanded",
+			"extensionName": ".css",
+			"savePath": "/src/main/webapp/static/css"
+		}],
+		// 各サブプロジェクトの sass ディレクトリを基準にする
+		"liveSassCompile.settings.forceBaseDirectory": "/tutorials/tutorials-root/sass",
+
+		// === 推奨補助設定 ===
+		"liveSassCompile.settings.autoprefix": ["> 1%", "last 2 versions"],
+		"liveSassCompile.settings.generateMap": true,
+		"files.exclude": {
+			"**/.classpath": true,
+			"**/.project": true,
+			"**/.settings": true,
+			"**/build": true
+		},
+		"editor.formatOnSave": true,
+		"compile-hero.disable-compile-files-on-did-save-code": false
+	}
+}
