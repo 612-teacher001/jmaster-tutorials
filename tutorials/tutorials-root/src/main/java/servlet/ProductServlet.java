@@ -29,11 +29,8 @@ public class ProductServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// finallyでクローズ処理をするための事前宣言
-		ProductDAO dao = null;
-		try {
-			// ProductDAOをインスタンス化
-			dao = new ProductDAO();
+		
+		try (ProductDAO dao = new ProductDAO()) {
 			// すべての商品リストを取得
 			List<Product> list = dao.findAll();
 			// 取得した商品リストをリクエストスコープに登録
@@ -49,13 +46,6 @@ public class ProductServlet extends HttpServlet {
 			e.printStackTrace();
 			// あらためてServletExceptionをスロー
 			throw new ServletException(e.getMessage(), e);
-		} finally {
-			try {
-				dao.close();
-			} catch (DAOException e) {
-				// 例外が発生した場合：スタックトレース（必要最低限のエラー情報）を表示：例外を上書きするリスクがあるのでスタックトレース表示だけ
-				e.printStackTrace();
-			}
 		}
 	}
 
