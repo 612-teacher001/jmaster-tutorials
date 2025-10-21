@@ -24,6 +24,13 @@
 								<button>検索</button>
 							</dd>
 						</dl>
+						<dl>
+							<dt>キーワード</dt>
+							<dd>
+								<input type="text" name="keywprd" />
+								<button>検索</button>
+							</dd>
+						</dl>
 					</form>
 					<ul>
 						<li><a href="${pageContext.request.contextPath}/ProductServlet/list">全商品</a></li>
