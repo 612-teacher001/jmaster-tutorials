@@ -9,18 +9,6 @@ html footer {
   margin: 0.75rem 0;
 }
 
-table th,
-table td {
-  padding: 0.25rem 0.75rem;
-}
-table td:first-child {
-  text-align: center;
-}
-table td:last-child,
-table td:nth-last-child(2) {
-  text-align: right;
-}
-
 .criteria ul {
   list-style-type: none;
   padding-left: 0.75rem;
@@ -28,5 +16,17 @@ table td:nth-last-child(2) {
 .criteria ul li {
   display: inline;
   margin: 0 0.25rem;
+}
+
+.result table th,
+.result table td {
+  padding: 0.25rem 0.75rem;
+}
+.result table td:first-child {
+  text-align: center;
+}
+.result table td:last-child,
+.result table td:nth-last-child(2) {
+  text-align: right;
 }
 /*# sourceMappingURL=product.css.map */

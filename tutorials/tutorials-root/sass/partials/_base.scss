@@ -4,6 +4,7 @@ html {
   font-size: 62.5%;
   body {
     color: dimgray;
+  	width: 900px;
     font-size: 1.4rem;
   }
   footer {
@@ -11,16 +12,3 @@ html {
   }
 }
 
-table {
-  th,
-  td {
-    padding: 0.25rem 0.75rem;
-  }
-  td:first-child {
-    text-align: center;
-  }
-  td:last-child,
-  td:nth-last-child(2) {
-    text-align: right;
-  }
-}
