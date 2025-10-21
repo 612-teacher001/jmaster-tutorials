@@ -19,7 +19,7 @@ import dao.common.DAOException;
 /**
  * Servlet implementation class ProductServlet
  */
-@WebServlet("/ProductServlet")
+@WebServlet({"/ProductServlet", "/ProductServlet/list"})
 public class ProductServlet extends HttpServlet {
 	
 	/**
@@ -59,18 +59,36 @@ public class ProductServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// リクエストパラメータを取得
+		String categoryIdString = request.getParameter("categoryId");
+		
 		try (ProductDAO dao = new ProductDAO()) {
-			// すべての商品リストを取得
-			List<Product> productList = dao.findAll();
+			
+			List<Product> productList = null;
+			int count = 0;
+			// リクエストパラメータによる処理の分岐
+			if (categoryIdString == null) {
+				// 送信されていない場合：すべての商品リストを取得
+				productList = dao.findAll();
+				count = productList.size();
+			} else {
+				// リクエストパラメータが送信されている場合：カテゴリ検索
+				int categoryId = Integer.parseInt(categoryIdString);
+				// 商品リストを取得
+				productList = dao.findByCategoryId(categoryId);
+				count = productList.size();
+			}
+			
 			// 取得した商品リストをリクエストスコープに登録
 			request.setAttribute("products", productList);
+			request.setAttribute("count", count);
 			// 遷移先URLの設定
 			String nextURL = "/WEB-INF/views/product/list.jsp";
 			// 画面遷移実行オブジェクトを取得
 			RequestDispatcher dispatcher = request.getRequestDispatcher(nextURL);
 			// 画面遷移
 			dispatcher.forward(request, response);
-		} catch (DAOException e) {
+		} catch (DAOException | NumberFormatException e) {
 			// 例外が発生した場合：スタックトレース（必要最低限のエラー情報）を表示
 			e.printStackTrace();
 			// あらためてServletExceptionをスロー

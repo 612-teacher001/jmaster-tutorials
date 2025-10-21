@@ -4,60 +4,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>表示確認用リンク</title>
+	<link rel="stylesheet" href="./static/css/index.css">
 	<style>
-		html {
-		  font-size: 62.5%;
-		}
-
-		body {
-		  color: dimgray;
-		  font-size: 1.4rem;
-		}
-
-		h1 {
-		  padding-left: 26.15rem;
-		  font-size: 135%;
-		}
-		h2, h3 {
-		  font-size: 115%;
-		}
-		
-		p {
-			margin: 0 26.15rem;
-		}
-
-		table, th, td {
-		  border-width: 0;
-		}
-
-		table {
-		  border-collapse: collapse;
-		  margin: 0 auto;
-		}
-
-		caption {
-		  font-size: 135%;
-		  font-weight: bold;
-		  text-align: left;
-		  padding: 0.75rem 1.25rem;
-		}
-
-		th, td {
-		  padding: 0.25rem 1.25rem 0.5rem;
-		}
-
-		tr:nth-child(even) {
-		  background-color: lightgray
-		}
-
-		td[colspan] {
-		  color: dimgray;
-		  background-color: white;
-		  padding-top: 1.75rem;
-		  font-size: 115%;
-		  font-weight: bold;
-		  text-decoration: underline;
-		}
 	</style>
 </head>
 <body>
@@ -66,21 +14,20 @@
 		このページはアプリケーションを開発していく過程で表示確認を行う際に必要となるURLの入力を低減するためのリンク集です。<br />
 		チュートリアル計画表から作成しているので、実際には初期表示用のURLだけで十分です。
 	</p>
-	<table border="1">
-		<!-- <caption>表示確認用リンク</caption>	 -->
-		<tr>
-			<td colspan="3">T0.00：プロジェクト構築</td>
-		</tr>
-		<tr>
-			<td colspan="3">T1.00：基本機能</td>
-		</tr>
+	<h2>T0.00：プロジェクト構築</h2>
+	<p>この機能は省略</p>
+	<h2>T1.00：基本機能</h2>
+<!--
+	<table>
 		<tr>
 			<td>T1.10</td>
+			<td>初期表示</td>
 			<td>JSPでアプリケーションタイトルを表示する</td>
 			<td><a href="http://localhost:8080/tutorials-root/EnqueteServlet">http://localhost:8080/tutorials-root/EnqueteServlet</a></td>
 		</tr>
 		<tr>
 			<td>T1.20</td>
+			<td>入力画面</td>
 			<td>入力部品を配置したページを表示する</td>
 			<td><a href="http://localhost:8080/tutorials-root/EnqueteServlet/input">http://localhost:8080/tutorials-root/EnqueteServlet/input</a></td>
 		</tr>
@@ -89,33 +36,63 @@
 			<td>入力画面のボタンクリックによる画面遷移</td>
 			<td><a href="http://localhost:8080/tutorials-root/EnqueteServlet/result">http://localhost:8080/tutorials-root/EnqueteServlet/result</a></td>
 		</tr>
-		<tr>
-			<td colspan="3">T2.00：共通機能</td>
-		</tr>
+	</table>
+-->
+	<h2>T2.00：共通機能</h2>
+	<table>
 		<tr>
 			<td>T2.10</td>
+			<td>全件検索</td>
+			<td>アプリケーション初期表示</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet">http://localhost:8080/tutorials-root/ProductServlet</a></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
 			<td>商品を全件検索結果を表示</td>
 			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list">http://localhost:8080/tutorials-root/ProductServlet/list</a></td>
 		</tr>
 		<tr>
 			<td>T2.20</td>
-			<td>選択入力値による商品検索結果を表示</td>
-			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list/?categoryId=">http://localhost:8080/tutorials-root/ProductServlet/list/?categoryId=</a></td>
+			<td>カテゴリ検索</td>
+			<td>DVD（<span class="ul__font__code">categoryId=2</span>）を選択した検索結果を表示</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list?categoryId=2">http://localhost:8080/tutorials-root/ProductServlet/list?categoryId=2</a></td>
 		</tr>
 		<tr>
 			<td>T2.30</td>
-			<td>並べ替え指定による検索結果を表示</td>
-			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list/?keyword=">http://localhost:8080/tutorials-root/ProductServlet/list/?keyword=</a></td>
+			<td>並べ替え</td>
+			<td>価格の安い順（<span class="ul__font__code">sort=asc</span>）に並べ替えた検索結果を表示</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list?sort=asc">http://localhost:8080/tutorials-root/ProductServlet/list?sort=asc</a></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>価格の高い順（<span class="ul__font__code">sort=desc</span>）に並べ替えた検索結果を表示</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list?sort=desc">http://localhost:8080/tutorials-root/ProductServlet/list?sort=desc</a></td>
 		</tr>
 		<tr>
 			<td>T2.40</td>
-			<td>キーワード入力による検索結果を表示</td>
-			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list/?keyword=&maxPrice=">http://localhost:8080/tutorials-root/ProductServlet/list/?keyword=&maxPrice=</a></td>
+			<td>キーワード検索</td>
+			<td>キーワード「a」（<span class="ul__font__code">keyword=a</span>）による検索結果を表示</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list?keyword=a">http://localhost:8080/tutorials-root/ProductServlet/list?keyword=a</a></td>
 		</tr>
 		<tr>
 			<td>T2.50</td>
-			<td>範囲指定による検索結果を表示</td>
-			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list/?keyword=&maxPrice=&sort=">http://localhost:8080/tutorials-root/ProductServlet/list/?keyword=&maxPrice=&sort=</a></td>
+			<td>範囲検索</td>
+			<td>1000円以下の商品（<span class="ul__font__code">maxPrice=1000</span>）の検索結果を表示</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/list?maxPrice=1000">http://localhost:8080/tutorials-root/ProductServlet/list?maxPrice=1000</a></td>
+		</tr>
+	</table>
+	<!--
+	<table border="1">
+		<tr>
+			<td colspan="3">T0.00：プロジェクト構築</td>
+		</tr>
+		<tr>
+			<td colspan="3">T1.00：基本機能</td>
+		</tr>
+		<tr>
+			<td colspan="3">T2.00：共通機能</td>
 		</tr>
 		<tr>
 			<td colspan="3">T3.00：商品管理</td>
@@ -204,5 +181,6 @@
 			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/delete/?id=">http://localhost:8080/tutorials-root/CategoryServlet/delete/?id=</a></td>
 		</tr>
 	</table>
+-->
 </body>
 </html>

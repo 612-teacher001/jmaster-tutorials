@@ -54,4 +54,54 @@ public class ProductDAO extends BaseDAO {
 		}
 	}
 
+	/**
+	 * 指定されたカテゴリIDに合致する商品をproductsテーブルから取得する
+	 * @param categoryId 検索するカテゴリID
+	 * @return 商品IDで昇順に並べ替えられた商品リスト
+	 * @throws DAOException データベース接続関連オブジェクトの処理でエラーが発生した場合
+	 */
+	public List<Product> findByCategoryId(int categoryId) throws DAOException {
+		try (PreparedStatement pstmt = this.conn.prepareStatement(SQL_FIND_BY_CATEGORY_ID);) {
+			// パラメータバインディング
+			pstmt.setInt(1, categoryId);
+			try (ResultSet rs = pstmt.executeQuery();) {
+				List<Product> list = this.convertToProductList(rs);
+				return list;
+			}
+		} catch (SQLException e) {
+			// 例外が発生した場合：スタックトレース（必要最低限のエラー情報）を表示してDAOExceptionをスロー
+			e.printStackTrace();
+			throw new DAOException("レコードを取得に失敗しました。", e);
+		}
+	}
+
+	/**
+	 * 結果セットから商品リストに変換する
+	 * @param rs 結果セット
+	 * @return 商品リスト
+	 * @throws SQLException データベース接続関連オブジェクトの処理でエラーが発生した場合
+	 */
+	private List<Product> convertToProductList(ResultSet rs) throws SQLException {
+		List<Product> list = new ArrayList<>();
+		while (rs.next()) {
+			list.add(this.convertToProduct(rs));
+		}
+		return list;
+	}
+	
+	/**
+	 * 結果セットの現在行から商品インスタンスに変換する
+	 * @param rs 結果セットの現在行
+	 * @return 商品インスタンス
+	 * @throws SQLException データベース接続関連オブジェクトの処理でエラーが発生した場合
+	 */
+	private Product convertToProduct(ResultSet rs) throws SQLException {
+		int id = rs.getInt("id");
+		int categoryId =  rs.getInt("category_id");
+		String name = rs.getString("name");
+		int price = rs.getInt("price");
+		int quantity = rs.getInt("quantity");
+		return new Product(id, categoryId, name, price, quantity);
+	}
+
 }

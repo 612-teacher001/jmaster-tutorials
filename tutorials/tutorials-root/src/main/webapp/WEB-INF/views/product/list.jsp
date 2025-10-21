@@ -23,22 +23,30 @@
 					</ul>
 				</section>
 				<section class="result">
-					<table border="1">
-						<tr>
-							<th>商品ID</th>
-							<th>商品名</th>
-							<th>価格</th>
-							<th>数量</th>
-						</tr>
-						<c:forEach items="${requestScope.products}" var="product">
-						<tr>
-							<td>${product.id}</td>
-							<td>${product.name}</td>
-							<td>${product.price}</td>
-							<td>${product.quantity}</td>
-						</tr>
-						</c:forEach>
-					</table>
+					<c:choose>
+						<c:when test="${requestScope.count == 0}">
+							<p>商品は見つかりませんでした。</p>
+						</c:when>
+						<c:otherwise>
+							<p>${requestScope.count}件の商品が見つかりました。</p>
+							<table border="1">
+								<tr>
+									<th>商品ID</th>
+									<th>商品名</th>
+									<th>価格</th>
+									<th>数量</th>
+								</tr>
+								<c:forEach items="${requestScope.products}" var="product">
+								<tr>
+									<td>${product.id}</td>
+									<td>${product.name}</td>
+									<td>${product.price}</td>
+									<td>${product.quantity}</td>
+								</tr>
+								</c:forEach>
+							</table>
+						</c:otherwise>
+					</c:choose>
 				</section>
 			</article>
 		</main>

@@ -1,0 +1,47 @@
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: dimgray;
+  font-size: 1.4rem;
+}
+body h1 {
+  font-size: 135%;
+}
+body h2, body h3 {
+  font-size: 115%;
+  margin-bottom: 0;
+}
+body p {
+  margin: 0;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0.75rem 0.25rem;
+  border-top: 1px, solid, dimgray;
+  border-bottom: 1px, solid, dimgray;
+}
+table th, table td {
+  border-width: 0;
+}
+table tr:hover {
+  background-color: antiquewhite;
+}
+table th, table td {
+  padding: 0 1.25rem 0.25rem 0;
+}
+table caption {
+  font-size: 135%;
+  font-weight: bold;
+  text-align: left;
+  padding: 0.5rem 1.25rem;
+}
+
+.ul__font__code {
+  font-family: "Source Code Pro", "Courier New", Courier, monospace;
+}
+.ul__borderless {
+  border-width: 0;
+}/*# sourceMappingURL=index.css.map */
