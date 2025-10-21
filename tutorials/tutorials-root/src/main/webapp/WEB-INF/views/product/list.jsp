@@ -15,7 +15,7 @@
 		<main>
 			<article class="search">
 				<section class="criteria">
-					<form class="criteria__entry" action="${pageContext.request.contextPath}/ProductServvlet/list" method="get">
+					<form class="criteria__entry" action="${pageContext.request.contextPath}/ProductServlet/list" method="get">
 						<dl>
 							<dt>並べ替え</dt>
 							<dd>

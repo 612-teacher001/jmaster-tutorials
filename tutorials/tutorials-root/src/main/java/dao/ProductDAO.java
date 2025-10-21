@@ -20,6 +20,8 @@ public class ProductDAO extends BaseDAO {
 	 */
 	private static final String SQL_FIND_ALL = "SELECT * FROM products ORDER BY id";
 	private static final String SQL_FIND_BY_CATEGORY_ID = "SELECT * FROM products WHERE category_id = ? ORDER By id";
+	private static final String SQL_FIND_ALL_ORDER_BY_PRICE_ASC = "SELECT * FROM products ORDER BY price ASC";
+	private static final String SQL_FIND_ALL_ORDER_BY_PRICE_DESC = "SELECT * FROM products ORDER BY price DESC";
 	
 	/**
 	 * 引数なしコンストラクタ
@@ -73,6 +75,39 @@ public class ProductDAO extends BaseDAO {
 			e.printStackTrace();
 			throw new DAOException("レコードを取得に失敗しました。", e);
 		}
+	}
+
+	/**
+	 * 価格の並び替え順を指定してすべての商品をproductsテーブルから取得する。
+	 * @param sortOrder 並び順（"asc" または "desc"）、nullまたは"asc"の場合は昇順
+	 * @return 価格順に並べ替えられた商品リスト
+	 * @throws DAOException データベース処理中にエラーが発生した場合
+	 */
+	public List<Product> findAllOrderByPrice(String sortOrder) throws DAOException {
+		// 引数によって実行するSQLを分岐
+		String sql = this.createSqlOrderByPrice(sortOrder);
+		// SQLの実行と結果セットの取得
+		try (PreparedStatement pstmt = this.conn.prepareStatement(sql);
+			 ResultSet rs= pstmt.executeQuery();) {
+			List<Product> list = this.convertToProductList(rs);
+			return list;
+		} catch (SQLException e) {
+			// 例外が発生した場合：スタックトレース（必要最低限のエラー情報）を表示してDAOExceptionをスロー
+			e.printStackTrace();
+			throw new DAOException("レコードを取得に失敗しました。", e);
+		}
+	}
+	
+	/**
+	 * 指定された価格の並び替え順ですべての商品をproductsテーブルから取得するSQLを取得する
+	 * @param orderBy 昇順の場合またはnullの場合は「asc」、それ以外は「desc」
+	 * @return 価格で並べ替えた商品リストを取得するSQL
+	 */
+	private String createSqlOrderByPrice(String orderBy) {
+		if (orderBy == null || orderBy.equals("asc")) {
+			return SQL_FIND_ALL_ORDER_BY_PRICE_ASC;
+		}
+		return SQL_FIND_ALL_ORDER_BY_PRICE_DESC;
 	}
 
 	/**
