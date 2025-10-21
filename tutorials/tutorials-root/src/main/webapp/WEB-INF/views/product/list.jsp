@@ -15,6 +15,16 @@
 		<main>
 			<article class="search">
 				<section class="criteria">
+					<form class="criteria__entry" action="${pageContext.request.contextPath}/ProductServvlet/list" method="get">
+						<dl>
+							<dt>並べ替え</dt>
+							<dd>
+								<label for="asc"><input type="radio" name="sortOrder" value="asc" id="asc" />価格の安い順</label>
+								<label for="desc"><input type="radio" name="sortOrder" value="desc" id="desc" />価格の高い順</label>
+								<button>検索</button>
+							</dd>
+						</dl>
+					</form>
 					<ul>
 						<li><a href="${pageContext.request.contextPath}/ProductServlet/list">全商品</a></li>
 						<c:forEach items="${applicationScope.categories}" var="category">

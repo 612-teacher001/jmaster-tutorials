@@ -10,6 +10,34 @@ html footer {
   margin: 0.75rem 0;
 }
 
+.criteria__entry {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid gainsboro;
+}
+.criteria__entry dl {
+  margin: 0.35rem 0;
+}
+.criteria__entry dl dt, .criteria__entry dl dd {
+  display: inline-block;
+  margin: 0;
+}
+.criteria__entry dl dt {
+  width: 7rem;
+  margin: 0 0 0 1.25rem;
+  font-weight: bold;
+}
+.criteria__entry dl dd {
+  margin: 0;
+}
+.criteria__entry label {
+  margin-right: 0.75rem;
+}
+.criteria__entry input[type=number] {
+  width: 12.3375rem;
+}
+.criteria__entry button {
+  color: dimgray;
+}
 .criteria ul {
   list-style-type: none;
   margin: 0.75rem 0;
