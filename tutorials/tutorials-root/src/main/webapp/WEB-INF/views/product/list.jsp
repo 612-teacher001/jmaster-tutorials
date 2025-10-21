@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>商品一覧</title>
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/product.css">
 	</head>
 	<body>
 		<h1>商品一覧</h1>

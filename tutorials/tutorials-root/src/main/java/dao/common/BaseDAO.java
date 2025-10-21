@@ -9,7 +9,7 @@ import dao.configure.DbConfigure;
 /**
  * すべてのDAOクラスが継承する基底DAOクラス
  */
-public class BaseDAO {
+public class BaseDAO implements AutoCloseable{
 	
 	/**
 	 * フィールド：データベース接続オブジェクト
@@ -48,6 +48,7 @@ public class BaseDAO {
 	 * データベースに接続する：データベース接続オブジェクトを設定する
 	 * @throws DAOException データベース接続オブジェクトの処理でエラーが発生した場合
 	 */
+	@Override
 	public void close() throws DAOException {
 		try {
 			if (this.conn != null) {
