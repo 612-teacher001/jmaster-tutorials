@@ -17,9 +17,9 @@
 				<section class="criteria">
 					<ul>
 						<li><a href="${pageContext.request.contextPath}/ProductServlet/list">全商品</a></li>
-						<li><a href="${pageContext.request.contextPath}/ProductServlet/list?categoryId=1">本</a></li>
-						<li><a href="${pageContext.request.contextPath}/ProductServlet/list?categoryId=2">DVD</a></li>
-						<li><a href="${pageContext.request.contextPath}/ProductServlet/list?categoryId=3">ゲーム</a></li>
+						<c:forEach items="${applicationScope.categories}" var="category">
+						<li><a href="${pageContext.request.contextPath}/ProductServlet/list?categoryId=${category.id}">${category.name}</a></li>
+						</c:forEach>
 					</ul>
 				</section>
 				<section class="result">
