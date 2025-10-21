@@ -61,13 +61,18 @@ public class ProductServlet extends HttpServlet {
 		
 		// リクエストパラメータを取得
 		String categoryIdString = request.getParameter("categoryId");
+		String sortOrder = request.getParameter("sortOrder");
 		
 		try (ProductDAO dao = new ProductDAO()) {
 			
 			List<Product> productList = null;
 			int count = 0;
 			// リクエストパラメータによる処理の分岐
-			if (categoryIdString == null) {
+			if (sortOrder != null) {
+				// 送信されている場合
+				productList = dao.findAllOrderByPrice(sortOrder);
+				count = productList.size();
+			} else if (categoryIdString == null) {
 				// 送信されていない場合：すべての商品リストを取得
 				productList = dao.findAll();
 				count = productList.size();

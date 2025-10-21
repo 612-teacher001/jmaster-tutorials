@@ -3,12 +3,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import bean.Product;
 
@@ -26,6 +30,120 @@ class ProductDaoTest {
 	void tearDown() throws Exception {
 	}
 
+	@Nested
+	@DisplayName("ProductDAO#findAllOrderByPrice(String)メソッドのテストクラス")
+	class FIndAllOrderByPriceTest {
+		@ParameterizedTest
+		@MethodSource("DataProvider")
+		@DisplayName("est-01:【正常系】価格の降順に並べ替える")
+		void  testFindAllOrder(String target, List<Product> expectedList) throws Exception {
+			//execute
+			List<Product> actualList = sut.findAllOrderByPrice(target);
+			// verify
+			Product actual = null;
+			Product expected = null;
+			for (int i = 0; i < expectedList.size(); ++i) {
+				actual = actualList.get(i);
+				expected = expectedList.get(i);
+				assertEquals(expected.toCompare(), actual.toCompare());
+			}
+			
+		}
+		
+		static Stream<Arguments> DataProvider() {
+			// setup
+			List<String> target = new ArrayList<>();
+			List<Product> expectedList = new ArrayList<>();
+			List<List<Product>> expected = new ArrayList<>();
+			
+			// Test-01: 価格の昇順に並べ変える
+			target.add("asc");
+			expectedList.add(new Product(3, "パズルゲーム", 780, 6));
+			expectedList.add(new Product(1, "MLB Fun", 980, 23));
+			expectedList.add(new Product(2, "The Racer", 1000, 19));
+			expectedList.add(new Product(1, "料理 BOOK!", 1200, 14));
+			expectedList.add(new Product(2, "Space Wars 3", 1800, 33));
+			expectedList.add(new Product(2, "懐かしのアニメシリーズ", 2000, 15));
+			expectedList.add(new Product(3, "Play the BasketBall", 2200, 2));
+			expectedList.add(new Product(1, "Javaの基本", 2500, 22));
+			expectedList.add(new Product(3, "Invader Fighter", 3400, 9));
+			expected.add(expectedList);
+			
+			// Test-02: 価格の降順に並べ替える
+			target.add("desc");
+			expectedList = new ArrayList<>();
+			expectedList.add(new Product(3, "Invader Fighter", 3400, 9));
+			expectedList.add(new Product(1, "Javaの基本", 2500, 22));
+			expectedList.add(new Product(3, "Play the BasketBall", 2200, 2));
+			expectedList.add(new Product(2, "懐かしのアニメシリーズ", 2000, 15));
+			expectedList.add(new Product(2, "Space Wars 3", 1800, 33));
+			expectedList.add(new Product(1, "料理 BOOK!", 1200, 14));
+			expectedList.add(new Product(2, "The Racer", 1000, 19));
+			expectedList.add(new Product(1, "MLB Fun", 980, 23));
+			expectedList.add(new Product(3, "パズルゲーム", 780, 6));
+			expected.add(expectedList);
+
+			// テストパラメータを返却
+			int maxIndex = expected.size() - 1;
+			return Stream.of(
+					  Arguments.of(target.get(0), expected.get(0))
+					, Arguments.of(target.get(maxIndex), expected.get(maxIndex))
+					);
+			
+		}
+	}
+	
+	@Nested
+	@DisplayName("ProductDAO#findByCategoryId(int)メソッドのテストクラス")
+	class FindByCategoryIdTest {
+		@ParameterizedTest
+		@MethodSource("dataProvider")
+		@DisplayName("Test-01:【正常系】登録されているカテゴリIDの商品を取得できる")
+		void testFindByCategoryId_01(int targetId, List<Product> expectedList) throws Exception {
+			// execute
+			List<Product> actualList = sut.findByCategoryId(targetId);
+			// verify
+			Product actual = null;
+			Product expected = null;
+			for (int i = 0; i < expectedList.size(); ++i) {
+				actual = actualList.get(i);
+				expected = expectedList.get(i);
+				assertEquals(expected.toCompare(), actual.toCompare());
+			}
+		}
+		
+		static Stream<Arguments> dataProvider() {
+			// setup
+			List<Integer> target = new ArrayList<>();
+			List<Product> products = new ArrayList<>();
+			List<List<Product>> expected = new ArrayList<>();
+			// Test-01: 商品カテゴリ「1」の商品を取得できる
+			target.add(1);
+			products = new ArrayList<>();
+			products.add(new Product(1, "Javaの基本", 2500, 22));
+			products.add(new Product(1, "MLB Fun", 980, 23));
+			products.add(new Product(1, "料理 BOOK!", 1200, 14));
+			expected.add(products);
+			// Test-02: 商品カテゴリ「3」の商品を取得できる
+			target.add(3);
+			products = new ArrayList<>();
+			products.add(new Product(3, "パズルゲーム", 780, 6));
+			products.add(new Product(3, "Invader Fighter", 3400, 9));
+			products.add(new Product(3, "Play the BasketBall", 2200, 2));
+			expected.add(products);
+			// Test-03: 登録されていない商品カテゴリ「-1」の商品は存在しない
+			target.add(1);
+			products = new ArrayList<>();
+			expected.add(products);
+			// テストパラメータの返却
+			return Stream.of(
+					  Arguments.of(target.get(0), expected.get(0))
+					, Arguments.of(target.get(1), expected.get(1))
+					, Arguments.of(target.get(2), expected.get(2))
+					);
+		}
+	}
+	
 	@Nested
 	@DisplayName("ProductDAO#findAll()メソッドのテストクラス")
 	class FindAllTest {
