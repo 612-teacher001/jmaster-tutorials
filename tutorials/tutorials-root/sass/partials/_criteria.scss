@@ -1,6 +1,36 @@
 @charset "utf-8";
 
 .criteria {
+	&__entry {
+		padding-bottom: 0.75rem;
+		border-bottom: 1px solid gainsboro;
+		dl {
+			margin: 0.35rem 0;
+			dt, dd {
+				display: inline-block;
+				margin: 0;
+			}
+			dt {
+				width: 1.4rem * 5;
+				margin: 0 0 0 1.25rem;
+				font-weight: bold;
+			}
+			dd {
+				margin: 0;
+			}
+		}
+		label {
+			margin-right: 0.75rem;
+		}
+		input {			
+			&[type="number"] {
+				width: 1.75rem * 7.05;
+			}
+		}
+		button {
+			color: dimgray;
+		}
+	}
 	ul {
 		list-style-type: none;
 		margin: 0.75rem 0;
