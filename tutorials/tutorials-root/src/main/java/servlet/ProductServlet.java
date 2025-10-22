@@ -59,30 +59,38 @@ public class ProductServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// リクエストパラメータを取得
-		String categoryIdString = request.getParameter("categoryId");
-		String sortOrder = request.getParameter("sortOrder");
-		
 		try (ProductDAO dao = new ProductDAO()) {
 			
+			// リクエストパラメータを取得
+			String categoryIdString = request.getParameter("categoryId");
+			String sortOrder = request.getParameter("sortOrder");
+			String keyword = request.getParameter("keyword");
+			
 			List<Product> productList = null;
-			int count = 0;
-			// リクエストパラメータによる処理の分岐
-			if (sortOrder != null) {
-				// 送信されている場合
-				productList = dao.findAllOrderByPrice(sortOrder);
-				count = productList.size();
-			} else if (categoryIdString == null) {
-				// 送信されていない場合：すべての商品リストを取得
-				productList = dao.findAll();
-				count = productList.size();
+			if (isNullOrEmpty(categoryIdString)) {
+				
+				// リクエストパラメータの送信状況
+				boolean hasSortOrder = !isNullOrEmpty(sortOrder);
+				boolean hasKeyword = !isNullOrEmpty(keyword);
+				
+				if (!hasSortOrder && !hasKeyword) {
+					productList = dao.findAll();
+				}
+				if (!hasSortOrder &&  hasKeyword) {
+					productList = dao.findByNameLikeKeyword(keyword);
+				}
+				if ( hasSortOrder && !hasKeyword) {
+					productList = dao.findAllOrderByPrice(sortOrder);
+				}
+				if ( hasSortOrder &&  hasKeyword) {
+					productList = dao.findByNameLikeKeywordOrderByPrice(sortOrder, keyword);
+				}
 			} else {
-				// リクエストパラメータが送信されている場合：カテゴリ検索
 				int categoryId = Integer.parseInt(categoryIdString);
-				// 商品リストを取得
 				productList = dao.findByCategoryId(categoryId);
-				count = productList.size();
 			}
+			
+			int count = productList.size();
 			
 			// 取得した商品リストをリクエストスコープに登録
 			request.setAttribute("products", productList);
@@ -107,6 +115,15 @@ public class ProductServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+
+	/**
+	 * 引数の文字列がnullまたは空文字列であるかどうかを判定する
+	 * @param target 判定対象文字列
+	 * @return nullまたは空文字列である場合はtrue、それ以外はfalse
+	 */
+	private boolean isNullOrEmpty(String target) {
+		return (target == null || target.isEmpty());
 	}
 
 }
