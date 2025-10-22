@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import bean.Product;
+import dao.helper.Parameters;
 
 class ProductDaoTest {
 
@@ -31,7 +32,55 @@ class ProductDaoTest {
 	}
 	
 	@Nested
-	@DisplayName("ProducctDAO#findNameByKeyword(Stringメソッドのテストクラス")
+	@DisplayName("ProductDAO#findByNameLikeKeywordOrderByPrice(String, String)メソッドのテストクラス")
+	class FindByNameLikeKeywordOrderByPriceTest {
+		@ParameterizedTest
+		@MethodSource("DataProvider")
+		@DisplayName("Test-01:【正常系】キーワードを含んだ商品名の商品を指定した価格の並び順で取得できる")
+		void testFindByNameLikeKeywordOrderByPrice(Parameters target, List<Product> expectedList) throws Exception {
+			// execute
+			List<Product> actualList = sut.findByNameLikeKeywordOrderByPrice(target.getSortOrder(), target.getKeyword());
+			// verify
+			Product actual = null;
+			Product expected = null;
+			for (int i = 0; i < expectedList.size(); ++i) {
+				actual = actualList.get(i);
+				expected = expectedList.get(i);
+				assertEquals(expected.toCompare(), actual.toCompare());
+			}
+		}
+		
+		static Stream<Arguments> DataProvider() {
+			// setup
+			List<Parameters> target = new ArrayList<>();
+			List<Product> expectedList = new ArrayList<>();
+			List<List<Product>> expected = new ArrayList<>();
+			
+			// Test-01: キーワード「a」で昇順（sortOrder=asc）で検索できる
+			target.add(new Parameters("asc", "a"));
+			expectedList.add(new Product(2, "The Racer", 1000, 19));
+			expectedList.add(new Product(2, "Space Wars 3", 1800, 33));
+			expectedList.add(new Product(3, "Play the BasketBall", 2200, 2));
+			expectedList.add(new Product(1, "Javaの基本", 2500, 22));
+			expectedList.add(new Product(3, "Invader Fighter", 3400, 9));
+			expected.add(expectedList);
+			// Test-02: キーワード「a」で昇順（sortOrder=asc）で検索できる
+			target.add(new Parameters("desc", "の"));
+			expectedList = new ArrayList<>();
+			expectedList.add(new Product(1, "Javaの基本", 2500, 22));
+			expectedList.add(new Product(2, "懐かしのアニメシリーズ", 2000, 15));
+			expected.add(expectedList);
+			
+			// テストパラメータを返却
+			return Stream.of(
+					  Arguments.of(target.get(0), expected.get(0))
+					, Arguments.of(target.get(1), expected.get(1))
+					);
+		}
+	}
+	
+	@Nested
+	@DisplayName("ProducctDAO#findNameByKeyword(String)メソッドのテストクラス")
 	class FindNameByKeywordTest {
 		@ParameterizedTest
 		@MethodSource("DataProvider")

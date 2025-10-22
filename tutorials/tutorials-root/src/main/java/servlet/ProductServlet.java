@@ -59,36 +59,38 @@ public class ProductServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// リクエストパラメータを取得
-		String categoryIdString = request.getParameter("categoryId");
-		String sortOrder = request.getParameter("sortOrder");
-		String keyword = request.getParameter("keyword");
-		
 		try (ProductDAO dao = new ProductDAO()) {
 			
-			List<Product> productList = null;
-			int count = 0;
+			// リクエストパラメータを取得
+			String categoryIdString = request.getParameter("categoryId");
+			String sortOrder = request.getParameter("sortOrder");
+			String keyword = request.getParameter("keyword");
 			
-			// リクエストパラメータによる処理の分岐
-			// TODO: 条件分岐については排他的なロジックで実装しているが、相関するロジックを検討する
-			if  (!(keyword == null || keyword.isEmpty())) {
-				productList = dao.findByNameLikeKeyword(keyword);
-				count = productList.size();
-			} else if (sortOrder != null) {
-				// 送信されている場合
-				productList = dao.findAllOrderByPrice(sortOrder);
-				count = productList.size();
-			} else if (categoryIdString != null) {
-				// リクエストパラメータが送信されている場合：カテゴリ検索
-				int categoryId = Integer.parseInt(categoryIdString);
-				// 商品リストを取得
-				productList = dao.findByCategoryId(categoryId);
-				count = productList.size();
+			List<Product> productList = null;
+			if (isNullOrEmpty(categoryIdString)) {
+				
+				// リクエストパラメータの送信状況
+				boolean hasSortOrder = !isNullOrEmpty(sortOrder);
+				boolean hasKeyword = !isNullOrEmpty(keyword);
+				
+				if (!hasSortOrder && !hasKeyword) {
+					productList = dao.findAll();
+				}
+				if (!hasSortOrder &&  hasKeyword) {
+					productList = dao.findByNameLikeKeyword(keyword);
+				}
+				if ( hasSortOrder && !hasKeyword) {
+					productList = dao.findAllOrderByPrice(sortOrder);
+				}
+				if ( hasSortOrder &&  hasKeyword) {
+					productList = dao.findByNameLikeKeywordOrderByPrice(sortOrder, keyword);
+				}
 			} else {
-				// 送信されていない場合：すべての商品リストを取得
-				productList = dao.findAll();
-				count = productList.size();
+				int categoryId = Integer.parseInt(categoryIdString);
+				productList = dao.findByCategoryId(categoryId);
 			}
+			
+			int count = productList.size();
 			
 			// 取得した商品リストをリクエストスコープに登録
 			request.setAttribute("products", productList);
@@ -113,6 +115,15 @@ public class ProductServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+
+	/**
+	 * 引数の文字列がnullまたは空文字列であるかどうかを判定する
+	 * @param target 判定対象文字列
+	 * @return nullまたは空文字列である場合はtrue、それ以外はfalse
+	 */
+	private boolean isNullOrEmpty(String target) {
+		return (target == null || target.isEmpty());
 	}
 
 }
