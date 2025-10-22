@@ -22,6 +22,7 @@ public class ProductDAO extends BaseDAO {
 	private static final String SQL_FIND_BY_CATEGORY_ID = "SELECT * FROM products WHERE category_id = ? ORDER By id";
 	private static final String SQL_FIND_ALL_ORDER_BY_PRICE_ASC = "SELECT * FROM products ORDER BY price ASC";
 	private static final String SQL_FIND_ALL_ORDER_BY_PRICE_DESC = "SELECT * FROM products ORDER BY price DESC";
+	private static final String SQL_FIND_NAME_LIKE_KEYWORD = "SELECT * FROM products WHERE name LIKE ? ORDER BY id";
 	
 	/**
 	 * 引数なしコンストラクタ
@@ -91,6 +92,21 @@ public class ProductDAO extends BaseDAO {
 			 ResultSet rs= pstmt.executeQuery();) {
 			List<Product> list = this.convertToProductList(rs);
 			return list;
+		} catch (SQLException e) {
+			// 例外が発生した場合：スタックトレース（必要最低限のエラー情報）を表示してDAOExceptionをスロー
+			e.printStackTrace();
+			throw new DAOException("レコードを取得に失敗しました。", e);
+		}
+	}
+	
+	public List<Product> findByNameLikeKeyword(String keyword) throws DAOException {
+		try (PreparedStatement pstmt = this.conn.prepareStatement(SQL_FIND_NAME_LIKE_KEYWORD);) {
+			// パラメータバインディング
+			pstmt.setString(1, "%" + keyword + "%");
+			try (ResultSet rs = pstmt.executeQuery();) {
+				List<Product> list = this.convertToProductList(rs);
+				return list;
+			}
 		} catch (SQLException e) {
 			// 例外が発生した場合：スタックトレース（必要最低限のエラー情報）を表示してDAOExceptionをスロー
 			e.printStackTrace();

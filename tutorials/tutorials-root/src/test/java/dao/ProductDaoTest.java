@@ -29,13 +29,63 @@ class ProductDaoTest {
 	@AfterEach
 	void tearDown() throws Exception {
 	}
+	
+	@Nested
+	@DisplayName("ProducctDAO#findNameByKeyword(Stringメソッドのテストクラス")
+	class FindNameByKeywordTest {
+		@ParameterizedTest
+		@MethodSource("DataProvider")
+		@DisplayName("Test-01:【正常系】キーワードが含まれる商品名のあいまい検索ができる")
+		void testFindNameByKeyword(String target, List<Product> expectedList) throws Exception {
+			//execute
+			List<Product> actualList = sut.findByNameLikeKeyword(target);
+			// verify
+			Product actual = null;
+			Product expected = null;
+			for (int i = 0; i < expectedList.size(); ++i) {
+				actual = actualList.get(i);
+				expected = expectedList.get(i);
+				assertEquals(expected.toCompare(), actual.toCompare());
+			}
+		}
+		
+		static Stream<Arguments> DataProvider() {
+			// setup
+			List<String> target = new ArrayList<>();
+			List<Product> expectedList = new ArrayList<>();
+			List<List<Product>> expected = new ArrayList<>();
+			
+			// Test-01: キーワード「a」であいまい検索する
+			target.add("a");
+			expectedList.add(new Product(1, "Javaの基本", 2500, 22));
+			expectedList.add(new Product(2, "The Racer", 1000, 19));
+			expectedList.add(new Product(2, "Space Wars 3", 1800, 33));
+			expectedList.add(new Product(3, "Invader Fighter", 3400, 9));
+			expectedList.add(new Product(3, "Play the BasketBall", 2200, 2));
+			expected.add(expectedList);
+			
+			// Test-02: キーワード「の」であいまい検索する
+			target.add("の");
+			expectedList = new ArrayList<>();
+			expectedList.add(new Product(1, "Javaの基本", 2500, 22));
+			expectedList.add(new Product(2, "懐かしのアニメシリーズ", 2000, 15));
+			expected.add(expectedList);
+			
+			// テストパラメータを返却
+			int maxInndex = expected.size() - 1;
+			return Stream.of(
+					  Arguments.of(target.get(0), expected.get(0))
+					, Arguments.of(target.get(maxInndex), expected.get(maxInndex))
+					);
+		}
+	}
 
 	@Nested
 	@DisplayName("ProductDAO#findAllOrderByPrice(String)メソッドのテストクラス")
-	class FIndAllOrderByPriceTest {
+	class FindAllOrderByPriceTest {
 		@ParameterizedTest
 		@MethodSource("DataProvider")
-		@DisplayName("est-01:【正常系】価格の降順に並べ替える")
+		@DisplayName("Test-01:【正常系】価格の降順に並べ替える")
 		void  testFindAllOrder(String target, List<Product> expectedList) throws Exception {
 			//execute
 			List<Product> actualList = sut.findAllOrderByPrice(target);
@@ -47,7 +97,6 @@ class ProductDaoTest {
 				expected = expectedList.get(i);
 				assertEquals(expected.toCompare(), actual.toCompare());
 			}
-			
 		}
 		
 		static Stream<Arguments> DataProvider() {

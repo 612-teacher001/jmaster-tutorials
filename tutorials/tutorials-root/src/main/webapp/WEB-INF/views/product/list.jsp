@@ -27,7 +27,7 @@
 						<dl>
 							<dt>キーワード</dt>
 							<dd>
-								<input type="text" name="keywprd" />
+								<input type="text" name="keyword" />
 								<button>検索</button>
 							</dd>
 						</dl>

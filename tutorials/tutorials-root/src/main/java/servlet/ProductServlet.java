@@ -62,25 +62,31 @@ public class ProductServlet extends HttpServlet {
 		// リクエストパラメータを取得
 		String categoryIdString = request.getParameter("categoryId");
 		String sortOrder = request.getParameter("sortOrder");
+		String keyword = request.getParameter("keyword");
 		
 		try (ProductDAO dao = new ProductDAO()) {
 			
 			List<Product> productList = null;
 			int count = 0;
+			
 			// リクエストパラメータによる処理の分岐
-			if (sortOrder != null) {
+			// TODO: 条件分岐については排他的なロジックで実装しているが、相関するロジックを検討する
+			if  (!(keyword == null || keyword.isEmpty())) {
+				productList = dao.findByNameLikeKeyword(keyword);
+				count = productList.size();
+			} else if (sortOrder != null) {
 				// 送信されている場合
 				productList = dao.findAllOrderByPrice(sortOrder);
 				count = productList.size();
-			} else if (categoryIdString == null) {
-				// 送信されていない場合：すべての商品リストを取得
-				productList = dao.findAll();
-				count = productList.size();
-			} else {
+			} else if (categoryIdString != null) {
 				// リクエストパラメータが送信されている場合：カテゴリ検索
 				int categoryId = Integer.parseInt(categoryIdString);
 				// 商品リストを取得
 				productList = dao.findByCategoryId(categoryId);
+				count = productList.size();
+			} else {
+				// 送信されていない場合：すべての商品リストを取得
+				productList = dao.findAll();
 				count = productList.size();
 			}
 			
