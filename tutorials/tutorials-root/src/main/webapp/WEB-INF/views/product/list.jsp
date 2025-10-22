@@ -31,6 +31,11 @@
 								<button>検索</button>
 							</dd>
 						</dl>
+						<dl>
+							<dt>範囲検索</dt>
+							<input type="number" name="maxPrice" /> 円以下
+							<button>検索</button>
+						</dl>
 					</form>
 					<ul>
 						<li><a href="${pageContext.request.contextPath}/ProductServlet/list">全商品</a></li>
