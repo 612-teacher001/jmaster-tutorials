@@ -65,6 +65,7 @@ public class ProductServlet extends HttpServlet {
 			String categoryIdString = request.getParameter("categoryId");
 			String sortOrder = request.getParameter("sortOrder");
 			String keyword = request.getParameter("keyword");
+			String maxPriceString = request.getParameter("maxPrice");
 			
 			List<Product> productList = null;
 			if (isNullOrEmpty(categoryIdString)) {
@@ -72,18 +73,36 @@ public class ProductServlet extends HttpServlet {
 				// リクエストパラメータの送信状況
 				boolean hasSortOrder = !isNullOrEmpty(sortOrder);
 				boolean hasKeyword = !isNullOrEmpty(keyword);
+				boolean hasMaxPrice = !isNullOrEmpty(maxPriceString);
 				
-				if (!hasSortOrder && !hasKeyword) {
-					productList = dao.findAll();
-				}
-				if (!hasSortOrder &&  hasKeyword) {
-					productList = dao.findByNameLikeKeyword(keyword);
-				}
-				if ( hasSortOrder && !hasKeyword) {
-					productList = dao.findAllOrderByPrice(sortOrder);
-				}
-				if ( hasSortOrder &&  hasKeyword) {
-					productList = dao.findByNameLikeKeywordOrderByPrice(sortOrder, keyword);
+				if (!hasMaxPrice) {
+					if (!hasSortOrder && !hasKeyword) {
+						productList = dao.findAll();
+					}
+					if (!hasSortOrder &&  hasKeyword) {
+						productList = dao.findByNameLikeKeyword(keyword);
+					}
+					if ( hasSortOrder && !hasKeyword) {
+						productList = dao.findAllOrderByPrice(sortOrder);
+					}
+					if ( hasSortOrder &&  hasKeyword) {
+						productList = dao.findByNameLikeKeywordOrderByPrice(sortOrder, keyword);
+					}
+				} else {
+					// データ型変換
+					int maxPrice = Integer.parseInt(maxPriceString);
+					if (!hasSortOrder && !hasKeyword &&  hasMaxPrice) {
+						productList = dao.findByPriceLessThanEqual(maxPrice);
+					}
+					if (!hasSortOrder &&  hasKeyword &&  hasMaxPrice) {
+						productList = dao.findByNameLikeKeywordAndPriceLessThanEqual(keyword, maxPrice);
+					}
+					if ( hasSortOrder && !hasKeyword &&  hasMaxPrice) {
+						productList = dao.findByPriceLessThanEqualOrderByPrice(sortOrder, maxPrice);
+					}
+					if ( hasSortOrder &&  hasKeyword &&  hasMaxPrice) {
+						productList = dao.findByNameLikeKeywordAndPriceLessThanEqualOrderByPrice(sortOrder, keyword, maxPrice);
+					}
 				}
 			} else {
 				int categoryId = Integer.parseInt(categoryIdString);
