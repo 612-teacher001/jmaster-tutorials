@@ -12,3 +12,11 @@ html {
   }
 }
 
+.ul {
+  &__bold {
+    font-weight: bold;
+  }
+  &__small {
+    font-size: small;
+  }
+}

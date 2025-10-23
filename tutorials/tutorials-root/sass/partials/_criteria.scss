@@ -17,6 +17,12 @@
 			}
 			dd {
 				margin: 0;
+				button {
+					&[type="submit"] {
+						width: 7.5rem;
+						margin-top: 0.25rem;
+					}
+				}
 			}
 		}
 		label {
@@ -38,6 +44,11 @@
 		li {
 			display: inline;
 			margin: 0 0.25rem;
+			a {
+				&:hover {
+					font-weight: bold;
+				}
+			}
 		}
 	}
 }

@@ -109,11 +109,14 @@ public class ProductServlet extends HttpServlet {
 				productList = dao.findByCategoryId(categoryId);
 			}
 			
-			int count = productList.size();
-			
 			// 取得した商品リストをリクエストスコープに登録
 			request.setAttribute("products", productList);
-			request.setAttribute("count", count);
+			// 検索条件をリクエストスコープに登録：検索条件の再現
+			request.setAttribute("categoryId", categoryIdString);
+			request.setAttribute("sort", sortOrder);
+			request.setAttribute("keyword", keyword);
+			request.setAttribute("maxPrice", maxPriceString);
+			
 			// 遷移先URLの設定
 			String nextURL = "/WEB-INF/views/product/list.jsp";
 			// 画面遷移実行オブジェクトを取得

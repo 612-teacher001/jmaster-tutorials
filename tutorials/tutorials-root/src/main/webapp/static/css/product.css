@@ -10,6 +10,13 @@ html footer {
   margin: 0.75rem 0;
 }
 
+.ul__bold {
+  font-weight: bold;
+}
+.ul__small {
+  font-size: small;
+}
+
 .criteria__entry {
   padding-bottom: 0.75rem;
   border-bottom: 1px solid gainsboro;
@@ -29,6 +36,10 @@ html footer {
 .criteria__entry dl dd {
   margin: 0;
 }
+.criteria__entry dl dd button[type=submit] {
+  width: 7.5rem;
+  margin-top: 0.25rem;
+}
 .criteria__entry label {
   margin-right: 0.75rem;
 }
@@ -46,6 +57,9 @@ html footer {
 .criteria ul li {
   display: inline;
   margin: 0 0.25rem;
+}
+.criteria ul li a:hover {
+  font-weight: bold;
 }
 
 .result table th,
