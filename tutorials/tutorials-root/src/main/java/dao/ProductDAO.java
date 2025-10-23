@@ -25,6 +25,12 @@ public class ProductDAO extends BaseDAO {
 	private static final String SQL_FIND_NAME_LIKE_KEYWORD = "SELECT * FROM products WHERE name LIKE ? ORDER BY id";
 	private static final String SQL_FIND_BY_NAME_LIKE_KEYWORD_ORDER_BY_PRICE_ASC = "SELECT * FROM products WHERE name LIKE ? ORDER BY price ASC";
 	private static final String SQL_FIND_BY_NAME_LIKE_KEYWORD_ORDER_BY_PRICE_DESC = "SELECT * FROM products WHERE name LIKE ? ORDER BY price DESC";
+	private static final String SQL_FIND_BY_PRICE_LESS_THAN_EQUAL = "SELECT * FROM products WHERE price <= ? ORDER BY price DESC";
+	private static final String SQL_FIND_BY_PRICE_LESS_THAN_EQUAL_ORDER_BY_PRICE_ASC = "SELECT * FROM products WHERE price <= ? ORDER BY price ASC";
+	private static final String SQL_FIND_BY_PRICE_LESS_THAN_EQUAL_ORDER_BY_PRICE_DESC = "SELECT * FROM products WHERE price <= ? ORDER BY price DESC";
+	private static final String SQL_FIND_BY_NAME_LIKE_KEYWORD_AND_PRICE_LESS_THAN_EQUAL_ASC = "SELECT * FROM products WHERE name LIKE ? AND price <= ? ORDER BY price ASC";
+	private static final String SQL_FIND_BY_NAME_LIKE_KEYWORD_AND_PRICE_LESS_THAN_EQUAL_DESC = "SELECT * FROM products WHERE name LIKE ? AND price <= ? ORDER BY price DESC";
+	
 	
 	/**
 	 * 引数なしコンストラクタ
@@ -135,6 +141,104 @@ public class ProductDAO extends BaseDAO {
 		try (PreparedStatement pstmt = this.conn.prepareStatement(sql);) {
 			//パラメータバインディング
 			pstmt.setString(1, "%" + keyword + "%");
+			try (ResultSet rs = pstmt.executeQuery();) {
+				List<Product> list = this.convertToProductList(rs);
+				return list;
+			}
+		} catch (SQLException e) {
+			// 例外が発生した場合：スタックトレース（必要最低限のエラー情報）を表示してDAOExceptionをスロー
+			e.printStackTrace();
+			throw new DAOException("レコードを取得に失敗しました。", e);
+		}
+	}
+	
+	/**
+	 * 指定された価格の上限以下の商品を取得する
+	 * @param maxPrice 価格の上限
+	 * @return 指定した価格以下の価格の商品リスト
+	 * @throws DAOException データベース処理中にエラーが発生した場合
+	 */
+	public List<Product> findByPriceLessThanEqual(int maxPrice) throws DAOException {
+		try (PreparedStatement pstmt = this.conn.prepareStatement(SQL_FIND_BY_PRICE_LESS_THAN_EQUAL);) {
+			// パラメータバインディング
+			pstmt.setInt(1, maxPrice);
+			try (ResultSet rs = pstmt.executeQuery();) {
+				List<Product> list = this.convertToProductList(rs);
+				return list;
+			}
+		} catch (SQLException e) {
+			// 例外が発生した場合：スタックトレース（必要最低限のエラー情報）を表示してDAOExceptionをスロー
+			e.printStackTrace();
+			throw new DAOException("レコードを取得に失敗しました。", e);
+		}
+	}
+
+	/**
+	 * 指定された価格の上限以下の商品をキーワード検索する
+	 * @param keyword  キーワード
+	 * @param maxPrice 価格の上限
+	 * @return キーワードを含む商品名の指定した価格以下の価格の商品リスト
+	 * @throws DAOException データベース処理中にエラーが発生した場合
+	 */
+	public List<Product> findByNameLikeKeywordAndPriceLessThanEqual(String keyword, int maxPrice) throws DAOException {
+		try (PreparedStatement pstmt = this.conn.prepareStatement(SQL_FIND_BY_NAME_LIKE_KEYWORD_AND_PRICE_LESS_THAN_EQUAL_DESC);) {
+			// パラメータバインディング
+			pstmt.setString(1, "%" + keyword + "%");
+			pstmt.setInt(2, maxPrice);
+			try (ResultSet rs = pstmt.executeQuery();) {
+				List<Product> list = this.convertToProductList(rs);
+				return list;
+			}
+		} catch (SQLException e) {
+			// 例外が発生した場合：スタックトレース（必要最低限のエラー情報）を表示してDAOExceptionをスロー
+			e.printStackTrace();
+			throw new DAOException("レコードを取得に失敗しました。", e);
+		}
+	}
+
+	/**
+	 * 価格上限値以下の商品を指定した価格の順序で並べ替えて取得する
+	 * @param sortOrder 並べ替え順序
+	 * @param maxPrice  価格上限値
+	 * @return 商品リスト
+	 * @throws DAOException データベース処理中にエラーが発生した場合
+	 */
+	public List<Product> findByPriceLessThanEqualOrderByPrice(String sortOrder, int maxPrice) throws DAOException {
+		String sql = SQL_FIND_BY_PRICE_LESS_THAN_EQUAL_ORDER_BY_PRICE_ASC;
+		if (sortOrder.equals("desc")) {
+			sql = SQL_FIND_BY_PRICE_LESS_THAN_EQUAL_ORDER_BY_PRICE_DESC;
+		}
+		try (PreparedStatement pstmt = this.conn.prepareStatement(sql);) {
+			// パラメータバインディング
+			pstmt.setInt(1, maxPrice);
+			try (ResultSet rs = pstmt.executeQuery();) {
+				List<Product> list = this.convertToProductList(rs);
+				return list;
+			}
+		} catch (SQLException e) {
+			// 例外が発生した場合：スタックトレース（必要最低限のエラー情報）を表示してDAOExceptionをスロー
+			e.printStackTrace();
+			throw new DAOException("レコードを取得に失敗しました。", e);
+		}
+	}
+	
+	/**
+	 * 指定された並べ替え順序でキーワードと価格上限の複合検索する 
+	 * @param sortOrder 並べ替え順序
+	 * @param keyword   キーワード
+	 * @param maxPrice  価格上限値
+	 * @return 複合検索した結果の商品リスト
+	 * @throws DAOException 
+	 */
+	public List<Product> findByNameLikeKeywordAndPriceLessThanEqualOrderByPrice(String sortOrder, String keyword, int maxPrice) throws DAOException {
+		String sql = SQL_FIND_BY_NAME_LIKE_KEYWORD_AND_PRICE_LESS_THAN_EQUAL_ASC;
+		if (sortOrder.equals("desc")) {
+			sql = SQL_FIND_BY_NAME_LIKE_KEYWORD_AND_PRICE_LESS_THAN_EQUAL_DESC;
+		}
+		try (PreparedStatement pstmt = this.conn.prepareStatement(sql);) {
+			// パラメータバインディング
+			pstmt.setString(1, "%" + keyword + "%");
+			pstmt.setInt(2, maxPrice);
 			try (ResultSet rs = pstmt.executeQuery();) {
 				List<Product> list = this.convertToProductList(rs);
 				return list;

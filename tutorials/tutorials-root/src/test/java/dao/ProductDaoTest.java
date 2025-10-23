@@ -32,6 +32,181 @@ class ProductDaoTest {
 	}
 	
 	@Nested
+	@DisplayName("ProductDAO#findByNameLikeKeywordAndPriceLessThanEqualOrderByPrice(String, String int)メソッドのテストクラス")
+	class FindByNameLikeKeywordAndPriceLessThanEqualOrderByPriceTest {
+		@ParameterizedTest
+		@MethodSource("DataProvider")
+		@DisplayName("Test-01:【正常系】指定された並べ替え順序でキーワードを含んだ価格上限値以下の価格の商品を取得できる")
+		void testFindByNameLikeKeywordAndPriceLessThanEqualOrderByPrice(Parameters target, List<Product> expectedList) throws Exception {
+			// execute
+			List<Product> actualList = sut.findByNameLikeKeywordAndPriceLessThanEqualOrderByPrice(target.getSortOrder(), target.getKeyword(), target.getMaxPrice());
+			// verify
+			Product actual = null;
+			Product expected = null;
+			for (int i = 0; i < expectedList.size(); ++i) {
+				actual = actualList.get(i);
+				expected = expectedList.get(i);
+				assertEquals(expected.toCompare(), actual.toCompare());
+			}
+		}
+		
+		static Stream<Arguments> DataProvider() {
+			// setup
+			List<Parameters> target = new ArrayList<>();
+			List<Product> expectedList = new ArrayList<>();
+			List<List<Product>> expected = new ArrayList<>();
+			
+			// Test-01: キーワード「a」を含んだ3000円以下の商品を価格の降順で並べる
+			target.add(new Parameters("desc", "a", "3000"));
+			expectedList.add(new Product(1, "Javaの基本", 2500, 22));
+			expectedList.add(new Product(3, "Play the BasketBall", 2200, 2));
+			expectedList.add(new Product(2, "Space Wars 3", 1800, 33));
+			expectedList.add(new Product(2, "The Racer", 1000, 19));
+			expected.add(expectedList);
+			
+			// テストパラメータを返却
+			return Stream.of(
+					Arguments.of(target.get(0), expected.get(0))
+					);
+		}
+	}
+	
+	@Nested
+	@DisplayName("ProductDAO#findByPriceLessThanEqualOrderByPrice(String, int)メソッドのテストクラス")
+	class FindByPriceLessThanEqualOrderByPriceTest {
+		@ParameterizedTest
+		@MethodSource("DataProvider")
+		@DisplayName("Test-01:【正常系】指定された並べ替え順序で価格の上限値以下の価格の商品を取得できる")
+		void testFindByPriceLessThanEqualOrderByPrice(Parameters target, List<Product> expectedList) throws Exception {
+			// execute
+			List<Product> actualList = sut.findByPriceLessThanEqualOrderByPrice(target.getSortOrder(), target.getMaxPrice());
+			// verify
+			Product actual = null;
+			Product expected = null;
+			for (int i = 0; i < expectedList.size(); ++i) {
+				actual = actualList.get(i);
+				expected = expectedList.get(i);
+				assertEquals(expected.toCompare(), actual.toCompare());
+			}
+		}
+		
+		static Stream<Arguments> DataProvider() {
+			// setup
+			List<Parameters> target = new ArrayList<>();
+			List<Product> expectedList = new ArrayList<>();
+			List<List<Product>> expected = new ArrayList<>();
+			
+			// Test-01: 1500円以下の商品を価格の昇順で取得する
+			target.add(new Parameters("asc", null, "1500"));
+			expectedList.add(new Product(3, "パズルゲーム", 780, 6));
+			expectedList.add(new Product(1, "MLB Fun", 980, 23));
+			expectedList.add(new Product(2, "The Racer", 1000, 19));
+			expectedList.add(new Product(1, "料理 BOOK!", 1200, 14));
+			expected.add(expectedList);
+			// Test-02: 750円以下の商品を価格の降順で取得する
+			target.add(new Parameters("desc", null, "2000"));
+			expectedList = new ArrayList<>();
+			expectedList.add(new Product(2, "懐かしのアニメシリーズ", 2000, 15));
+			expectedList.add(new Product(2, "Space Wars 3", 1800, 33));
+			expectedList.add(new Product(1, "料理 BOOK!", 1200, 14));
+			expectedList.add(new Product(2, "The Racer", 1000, 19));
+			expectedList.add(new Product(1, "MLB Fun", 980, 23));
+			expectedList.add(new Product(3, "パズルゲーム", 780, 6));
+			expected.add(expectedList);
+			
+			// テストパラメータを返却
+			return Stream.of(
+					  Arguments.of(target.get(0), expected.get(0))
+					, Arguments.of(target.get(1), expected.get(1))
+					);
+		}
+	}
+	
+	
+	@Nested
+	@DisplayName("ProductDAO#findByNameLikeKeywordAndPriceLessThanEqual(String, int)メソッドのテストクラス")
+	class FindByNameLikeKeywordAndPriceLessThanEqualTest {
+		@ParameterizedTest
+		@MethodSource("DataProvider")
+		@DisplayName("Test-01:【正常系】キーワードを商品名に含んでかつ価格の上限値以下の価格の商品を取得できる")
+		void testFindByNameLikeKeywordAndPriceLessThanEqual(Parameters target, List<Product> expectedList) throws Exception {
+			// execute
+			List<Product> actualList = sut.findByNameLikeKeywordAndPriceLessThanEqual(target.getKeyword(), target.getMaxPrice());
+			// verify
+			Product actual = null;
+			Product expected = null;
+			for (int i = 0; i < expectedList.size(); ++i) {
+				actual = actualList.get(i);
+				expected = expectedList.get(i);
+				assertEquals(expected.toCompare(), actual.toCompare());
+			}
+		}
+		
+		static Stream<Arguments> DataProvider() {
+			// setup
+			List<Parameters> target = new ArrayList<>();
+			List<Product> expectedList = new ArrayList<>();
+			List<List<Product>> expected = new ArrayList<>();
+			
+			// Test-01: キーワード「a」で3000円以下の商品を取得する
+			target.add(new Parameters(null, "a", "3000"));
+			expectedList.add(new Product(1, "Javaの基本", 2500, 22));
+			expectedList.add(new Product(3, "Play the BasketBall", 2200, 2));
+			expectedList.add(new Product(2, "Space Wars 3", 1800, 33));
+			expectedList.add(new Product(2, "The Racer", 1000, 19));
+			expected.add(expectedList);
+			
+			// テストパラメータを返却
+			return Stream.of(
+					Arguments.of(target.get(0), expected.get(0))
+					);
+		}
+	}
+	
+	@Nested
+	@DisplayName("ProductDAO#findByPriceLessThanEqual(int)メソッドのテストクラス")
+	class FindByPriceLessThanEqualTest {
+		@ParameterizedTest
+		@MethodSource("DataProvider")
+		@DisplayName("Test-01:【正常系】価格の上限値以下の価格の商品を取得できる")
+		void testFindByPriceLessThanEqual(int target, List<Product> expectedList) throws Exception {
+			// execute
+			List<Product> actualList = sut.findByPriceLessThanEqual(target);
+			// verify
+			Product actual = null;
+			Product expected = null;
+			for (int i = 0; i < expectedList.size(); ++i) {
+				actual = actualList.get(i);
+				expected = expectedList.get(i);
+				assertEquals(expected.toCompare(), actual.toCompare());
+			}
+		}
+		
+		static Stream<Arguments> DataProvider() {
+			// setup
+			List<Integer> target = new ArrayList<>();
+			List<Product> expectedList = new ArrayList<>();
+			List<List<Product>> expected = new ArrayList<>();
+			
+			// Test-01: 1000円以下の商品を取得する
+			target.add(1000);
+			expectedList.add(new Product(2, "The Racer", 1000, 19));
+			expectedList.add(new Product(1, "MLB Fun", 980, 23));
+			expectedList.add(new Product(3, "パズルゲーム", 780, 6));
+			expected.add(expectedList);
+			// Test-02: 500円以下の商品を取得できない
+			target.add(500);
+			expected.add(new ArrayList<Product>());
+			
+			// テストパラメータを返却
+			return Stream.of(
+					  Arguments.of(target.get(0), expected.get(0))
+					, Arguments.of(target.get(1), expected.get(1))
+					);
+		}
+	}
+	
+	@Nested
 	@DisplayName("ProductDAO#findByNameLikeKeywordOrderByPrice(String, String)メソッドのテストクラス")
 	class FindByNameLikeKeywordOrderByPriceTest {
 		@ParameterizedTest
