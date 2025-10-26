@@ -7,7 +7,7 @@ task createDatabase(type: Exec) {
 	commandLine 'psql',
 		'-U', 'postgres',
 		'-d', 'postgres',
-		'-f', "${projectDir}/sql/01_create_database.sql"
+		'-f', "${rootDir}/sql/01_create_database.sql"
 }
 
 // DLL適用（一般ユーザ）
@@ -16,7 +16,7 @@ task createTables(type: Exec) {
 	commandLine 'psql',
 		'-U', 'student',
 		'-d', 'jbasicdaodb',
-		'-f', "${projectDir}/sql/02_create_tables.sql"
+		'-f', "${rootDir}/sql/02_create_tables.sql"
 }
 
 // サンプルレコードの投入（一般ユーザ）
@@ -25,7 +25,7 @@ task insertRecords(type: Exec) {
 	commandLine 'psql',
 		'-U', 'student',
 		'-d', 'jbasicdaodb',
-		'-f', "${projectDir}/sql/03_insert_records.sql"
+		'-f', "${rootDir}/sql/03_insert_records.sql"
 }
 
 // まとめて実行
