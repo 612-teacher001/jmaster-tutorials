@@ -26,17 +26,10 @@ subprojects {
     apply from: rootProject.file('scripts/eclipse/index.gradle')
     apply from: rootProject.file('scripts/gretty/index.gradle')
     apply from: rootProject.file('scripts/tasks/index.gradle')
-
 	gretty {
 		servletContainer = 'tomcat10'
 	}
-    // common-webのwebapp内容を追加
-//    war {
-//        from(project(":common-web-resources").file("src/main/webapp/")) {
-//            into "/WEB-INF/"
-//        }
-//    }
-
+	
 	sourceSets {
 	    main {
 	        java {
@@ -57,3 +50,7 @@ subprojects {
 	}
 
 }
+
+// DB初期化タスクをルートプロジェクトだけで実行
+apply from: rootProject.file('scripts/tasks/index.gradle')
+
