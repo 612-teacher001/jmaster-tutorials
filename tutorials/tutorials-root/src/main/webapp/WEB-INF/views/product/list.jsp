@@ -4,15 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ja">
-	<head>
-		<meta charset="UTF-8">
-		<title>商品一覧</title>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/product.css">
-	</head>
+	<!-- ヘッド要素領域 -->
+	<jsp:include page="../common/head.jsp" />
+
 	<body id="product">
-		<header>
-			<h1>商品一覧</h1>
-		</header>
+		<!-- ページヘッダ要素領域 -->
+		<jsp:include page="../common/header.jsp" />
+
 		<main>
 			<article class="search">
 				<section class="criteria">
@@ -94,11 +92,12 @@
 							</table>
 						</c:otherwise>
 					</c:choose>
+					<p><a href="${pageContext.request.contextPath}/ProductServlet/insert">新規登録ページへ</a></p>
 				</section>
 			</article>
 		</main>
-		<footer>
-			<div class="copyright">&copy;2025 Java Tutorials.</div>
-		</footer>
+		
+		<!-- ページフッタ要素領域 -->
+		<jsp:include page="../common/footer.jsp" />
 	</body>
 </html>

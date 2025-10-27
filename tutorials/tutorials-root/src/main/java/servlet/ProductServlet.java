@@ -31,10 +31,15 @@ public class ProductServlet extends HttpServlet {
 	 * クラス定数
 	 */
 	// 遷移先URL
-	private static final String URL_PRODUCT_LIST = "/ProducctServlet/list";
-	private static final String JSP_PRODUCT_LIST = "/WEB-INF/views/product/list.jsp";
+	private static final String REDIRECT_PRODUCT_LIST = "/ProductServlet/list";
+	private static final String JSP_PRODUCT_DIR = "/WEB-INF/views/product"; 
+	private static final String JSP_PRODUCT_LIST = JSP_PRODUCT_DIR + "/list.jsp";
+	private static final String JSP_PRODUCT_ENTRY = JSP_PRODUCT_DIR + "/entry.jsp";
+	//パスインフォ定数
+	private static final String OPERATION_LIST   = "/list";
+	private static final String OPERATION_ADD = "/insert";
 	// actionキー定数
-	private static final String ACTION_LIST = "/list";
+	private static final String ACTION_ENTRY = "entry";
 	
 	@Override
 	public void init() throws ServletException {
@@ -68,16 +73,28 @@ public class ProductServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 遷移先URLの初期化
+		// 遷移先URLの初期化：表示確認用リンクページURL（/inndex.htmlに遷移）
 		String nextURL = "/";
+		
+		getServletContext().setAttribute("operation", "商品管理機能");
 		
 		try (ProductDAO dao = new ProductDAO()) {
 			// リクエストパラメータのactionキーを取得
 			String action = request.getParameter("action");
-			
+			String pathInfo = request.getPathInfo();
 			// actionキーによる処理の分岐
-			if (isNullOrEmpty(action) || action.equals(ACTION_LIST)) {
+			if (isNullOrEmpty(pathInfo) || pathInfo.equals(OPERATION_LIST)) {
+				// 遷移先URLを取得
 				nextURL = displayProductList(request, dao);
+				// リクエストスコープに登録
+				request.setAttribute("title", "商品一覧");
+				getServletContext().setAttribute("operation", "共通機能");
+			} else if (pathInfo.equals(OPERATION_ADD)) {
+				// 遷移先URLを取得
+				nextURL = addProduct(request, dao, action);
+				// リクエストスコープに登録
+				request.setAttribute("title", "商品登録");
+				request.setAttribute("display", "hidden");
 			} else {
 				// 登録・更新・削除がここに追記されていく
 			}
@@ -171,6 +188,15 @@ public class ProductServlet extends HttpServlet {
 		// 遷移先URLの設定
 		return JSP_PRODUCT_LIST;
 		
+	}
+	
+	private String addProduct(HttpServletRequest request, ProductDAO dao, String action) {
+		String nextURL = "";
+		if (isNullOrEmpty(action) || action.equals(ACTION_ENTRY)) {
+			// 登録処理初期画面表示：登録画面
+			nextURL = JSP_PRODUCT_ENTRY;
+		}
+		return nextURL;
 	}
 	
 	/**
