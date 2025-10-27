@@ -3,19 +3,63 @@ html {
 }
 html body {
   color: dimgray;
+  width: 900px;
   font-size: 1.4rem;
 }
 html footer {
   margin: 0.75rem 0;
 }
 
+.ul__bold {
+  font-weight: bold;
+}
+.ul__small {
+  font-size: small;
+}
+
+.criteria__entry {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid gainsboro;
+}
+.criteria__entry dl {
+  margin: 0.35rem 0;
+}
+.criteria__entry dl dt, .criteria__entry dl dd {
+  display: inline-block;
+  margin: 0;
+}
+.criteria__entry dl dt {
+  width: 7rem;
+  margin: 0 0 0 1.25rem;
+  font-weight: bold;
+}
+.criteria__entry dl dd {
+  margin: 0;
+}
+.criteria__entry dl dd button[type=submit] {
+  width: 7.5rem;
+  margin-top: 0.25rem;
+}
+.criteria__entry label {
+  margin-right: 0.75rem;
+}
+.criteria__entry input[type=number] {
+  width: 12.3375rem;
+}
+.criteria__entry button {
+  color: dimgray;
+}
 .criteria ul {
   list-style-type: none;
+  margin: 0.75rem 0;
   padding-left: 0.75rem;
 }
 .criteria ul li {
   display: inline;
   margin: 0 0.25rem;
+}
+.criteria ul li a:hover {
+  font-weight: bold;
 }
 
 .result table th,
@@ -28,5 +72,12 @@ html footer {
 .result table td:last-child,
 .result table td:nth-last-child(2) {
   text-align: right;
+}
+
+.insert__entry .entry__form table {
+  border: 1px solid lightgray;
+}
+.insert__entry .entry__form button {
+  margin: 0.75rem 0.25rem;
 }
 /*# sourceMappingURL=product.css.map */

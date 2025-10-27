@@ -94,93 +94,108 @@
 		<tr>
 			<td colspan="3">T2.00：共通機能</td>
 		</tr>
-		<tr>
-			<td colspan="3">T3.00：商品管理</td>
-		</tr>
+	-->
+	<h2>T3.00：商品管理</h2>
+	<table>
 		<tr>
 			<td>T3.11</td>
-			<td>商品登録画面を表示する</td>
-			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/insert/?categoryId=&name=&price=&quantity=">http://localhost:8080/tutorials-root/ProductServlet/insert/?categoryId=&name=&price=&quantity=</a></td>
+			<td>商品の新規登録</td>
+			<td>商品の新規登録画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/insert?action=entry">http://localhost:8080/tutorials-root/ProductServlet/insert?action=entry</a></td>
 		</tr>
 		<tr>
 			<td>T3.12</td>
-			<td>登録内容確認画面を表示する</td>
-			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/insert/?categoryId=&name=&price=&quantity=">http://localhost:8080/tutorials-root/ProductServlet/insert/?categoryId=&name=&price=&quantity=</a></td>
+			<td></td>
+			<td>登録内容の確認画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/insert?action=confirm">http://localhost:8080/tutorials-root/ProductServlet/insert?action=confirm</a></td>
 		</tr>
 		<tr>
 			<td>T3.13</td>
-			<td>商品を登録する</td>
-			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/update">http://localhost:8080/tutorials-root/ProductServlet/update</a></td>
+			<td></td>
+			<td>商品登録処理を実行する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/insert?action=execute">http://localhost:8080/tutorials-root/ProductServlet/insert?action=execute</a></td>
 		</tr>
 		<tr>
 			<td>T3.21</td>
-			<td>商品情報の変更画面を表示する</td>
-			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/update/?categoryId=&name=&price=&quantity=">http://localhost:8080/tutorials-root/ProductServlet/update/?categoryId=&name=&price=&quantity=</a></td>
+			<td>商品更新</td>
+			<td>商品情報の更新画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/update?action=entry">http://localhost:8080/tutorials-root/ProductServlet/update??action=entry</a></td>
 		</tr>
 		<tr>
 			<td>T3.22</td>
-			<td>変更内容確認画面を表示する</td>
-			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/update/?categoryId=&name=&price=&quantity=">http://localhost:8080/tutorials-root/ProductServlet/update/?categoryId=&name=&price=&quantity=</a></td>
+			<td></td>
+			<td>更新内容の確認画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/update?action=confirm">http://localhost:8080/tutorials-root/ProductServlet/update?action=confirm</a></td>
 		</tr>
 		<tr>
 			<td>T3.23</td>
-			<td>商品情報を更新する</td>
-			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/delete/?id=">http://localhost:8080/tutorials-root/ProductServlet/delete/?id=</a></td>
+			<td></td>
+			<td>商品情報更新処理を実行する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/update?action=execute">http://localhost:8080/tutorials-root/ProductServlet/update?action=exeucte</a></td>
 		</tr>
 		<tr>
 			<td>T3.31</td>
-			<td>削除する商品確認画面を表示する</td>
-			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/insert">http://localhost:8080/tutorials-root/ProductServlet/insert</a></td>
+			<td>商品削除</td>
+			<td>削除対象商品の確認画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/delete?action=confirm">http://localhost:8080/tutorials-root/ProductServlet/delete?action=confirm</a></td>
 		</tr>
 		<tr>
 			<td>T3.32</td>
-			<td>商品を削除する</td>
-			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/delete/?id=">http://localhost:8080/tutorials-root/ProductServlet/delete/?id=</a></td>
+			<td></td>
+			<td>商品削除処理を実行する</td>
+			<td><a href="http://localhost:8080/tutorials-root/ProductServlet/delete?action=execute">http://localhost:8080/tutorials-root/ProductServlet/delete?action=execute</a></td>
 		</tr>
-		<tr>
-			<td colspan="3">T4.00：カテゴリ管理</td>
-		</tr>
+	</table>
+	<h2>T4.00：カテゴリ管理</h2>
+	<table>
 		<tr>
 			<td>T4.11</td>
-			<td>カテゴリ登録画面を表示する</td>
-			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/insert">http://localhost:8080/tutorials-root/CategoryServlet/insert</a></td>
+			<td>カテゴリの新規登録</td>
+			<td>カテゴリの新規登録画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/insert?action=entry">http://localhost:8080/tutorials-root/CategoryServlet/insert?action=entry</a></td>
 		</tr>
 		<tr>
 			<td>T4.12</td>
-			<td>カテゴリ内容確認画面を表示する</td>
-			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/insert/?name=">http://localhost:8080/tutorials-root/CategoryServlet/insert/?name=</a></td>
+			<td></td>
+			<td>カテゴリ内容の確認画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/insert?action=confirm">http://localhost:8080/tutorials-root/CategoryServlet/insertaction=confirm</a></td>
 		</tr>
 		<tr>
 			<td>T4.13</td>
-			<td>カテゴリ登録する</td>
-			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/insert/?name=">http://localhost:8080/tutorials-root/CategoryServlet/insert/?name=</a></td>
+			<td></td>
+			<td>カテゴリ登録処理を実行する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/insert?action=execute">http://localhost:8080/tutorials-root/CategoryServlet/insert?action=execute</a></td>
 		</tr>
 		<tr>
 			<td>T4.21</td>
-			<td>カテゴリ変更画面を表示する</td>
-			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/update">http://localhost:8080/tutorials-root/CategoryServlet/update</a></td>
+			<td>カテゴリ更新</td>
+			<td>カテゴリ情報の変更画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/update?action=entry">http://localhost:8080/tutorials-root/CategoryServlet/update?action=entry</a></td>
 		</tr>
 		<tr>
 			<td>T4.22</td>
-			<td>変更内容確認画面を表示する</td>
-			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/update/?id=">http://localhost:8080/tutorials-root/CategoryServlet/update/?id=</a></td>
+			<td></td>
+			<td>変更内容の確認画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/update?action=confirm">http://localhost:8080/tutorials-root/CategoryServlet/update?action=confirm</a></td>
 		</tr>
 		<tr>
 			<td>T4.23</td>
-			<td>カテゴリを更新する</td>
-			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/update/?id=&name=">http://localhost:8080/tutorials-root/CategoryServlet/update/?id=&name=</a></td>
+			<td></td>
+			<td>カテゴリ情報更新処理を実行する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/update?action=execute">http://localhost:8080/tutorials-root/CategoryServlet/update?action=execute</a></td>
 		</tr>
 		<tr>
 			<td>T4.31</td>
-			<td>削除するカテゴリ確認画面を表示する</td>
-			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/delete/?id=">http://localhost:8080/tutorials-root/CategoryServlet/delete/?id=</a></td>
+			<td>カテゴリ削除</td>
+			<td>削除対象カテゴリの確認画面を表示する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/delete?action=confirm">http://localhost:8080/tutorials-root/CategoryServlet/delete?action=confirm</a></td>
 		</tr>
 		<tr>
 			<td>T4.32</td>
-			<td>カテゴリを削除する</td>
-			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/delete/?id=">http://localhost:8080/tutorials-root/CategoryServlet/delete/?id=</a></td>
+			<td></td>
+			<td>カテゴリ削除処理を実行する</td>
+			<td><a href="http://localhost:8080/tutorials-root/CategoryServlet/delete?action=execute">http://localhost:8080/tutorials-root/CategoryServlet/delete?action=execute</a></td>
 		</tr>
 	</table>
--->
 </body>
 </html>

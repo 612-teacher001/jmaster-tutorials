@@ -4,15 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ja">
-	<head>
-		<meta charset="UTF-8">
-		<title>商品一覧</title>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/product.css">
-	</head>
+	<!-- ヘッド要素領域 -->
+	<jsp:include page="../common/head.jsp" />
+
 	<body id="product">
-		<header>
-			<h1>商品一覧</h1>
-		</header>
+		<!-- ページヘッダ要素領域 -->
+		<jsp:include page="../common/header.jsp" />
+
 		<main>
 			<article class="search">
 				<section class="criteria">
@@ -21,11 +19,11 @@
 							<dt>並べ替え</dt>
 							<dd>
 								<c:choose>
-									<c:when test="${sort eq 'asc'}">
+									<c:when test="${requestScope.sort eq 'asc'}">
 											<label for="asc"><input type="radio" name="sortOrder" value="asc" id="asc" checked />価格の安い順</label>
 											<label for="desc"><input type="radio" name="sortOrder" value="desc" id="desc" />価格の高い順</label>
 									</c:when>
-									<c:when test="${sort eq 'desc'}">
+									<c:when test="${requestScope.sort eq 'desc'}">
 											<label for="asc"><input type="radio" name="sortOrder" value="asc" id="asc" />価格の安い順</label>
 											<label for="desc"><input type="radio" name="sortOrder" value="desc" id="desc" checked />価格の高い順</label>
 									</c:when>
@@ -39,12 +37,12 @@
 						<dl>
 							<dt>キーワード</dt>
 							<dd>
-								<input type="text" name="keyword" value="${keyword}" />
+								<input type="text" name="keyword" value="${requestScope.keyword}" />
 							</dd>
 						</dl>
 						<dl>
 							<dt>範囲検索</dt>
-							<input type="number" name="maxPrice" value="${maxPrice}" /> 円以下
+							<input type="number" name="maxPrice" value="${requestScope.maxPrice}" /> 円以下
 						</dl>
 						<dl>
 							<dt></dt>
@@ -55,7 +53,7 @@
 						<li><a href="${pageContext.request.contextPath}/ProductServlet/list">全商品</a></li>
 						<c:forEach items="${applicationScope.categories}" var="category">
 							<c:choose>
-								<c:when test="${categoryId eq category.id}">
+								<c:when test="${requestScope.categoryId eq category.id}">
 									<li>
 										<a class="ul__bold" href="${pageContext.request.contextPath}/ProductServlet/list?categoryId=${category.id}">${category.name}</a>
 									</li>
@@ -83,7 +81,7 @@
 									<th>価格</th>
 									<th>数量</th>
 								</tr>
-								<c:forEach items="${requestScope.products}" var="product">
+								<c:forEach items="${requestScope.productList}" var="product">
 								<tr>
 									<td>${product.id}</td>
 									<td>${product.name}</td>
@@ -94,11 +92,12 @@
 							</table>
 						</c:otherwise>
 					</c:choose>
+					<p><a href="${pageContext.request.contextPath}/ProductServlet/insert">新規登録ページへ</a></p>
 				</section>
 			</article>
 		</main>
-		<footer>
-			<div class="copyright">&copy;2025 Java Tutorials.</div>
-		</footer>
+		
+		<!-- ページフッタ要素領域 -->
+		<jsp:include page="../common/footer.jsp" />
 	</body>
 </html>
