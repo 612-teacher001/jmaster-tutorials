@@ -32,14 +32,18 @@ public class ProductServlet extends HttpServlet {
 	 */
 	// 遷移先URL
 	private static final String REDIRECT_PRODUCT_LIST = "/ProductServlet/list";
+	private static final String URL_PRODUCT_ENRTY = "/ProductServlet/insert";
 	private static final String JSP_PRODUCT_DIR = "/WEB-INF/views/product"; 
 	private static final String JSP_PRODUCT_LIST = JSP_PRODUCT_DIR + "/list.jsp";
 	private static final String JSP_PRODUCT_ENTRY = JSP_PRODUCT_DIR + "/entry.jsp";
+	private static final String JSP_PRODUCT_CONFIRM = JSP_PRODUCT_DIR + "/confirm.jsp";
 	//パスインフォ定数
 	private static final String OPERATION_LIST   = "/list";
 	private static final String OPERATION_ADD = "/insert";
 	// actionキー定数
 	private static final String ACTION_ENTRY = "entry";
+	private static final String ACTION_CONFIRM = "confirm";
+
 	
 	@Override
 	public void init() throws ServletException {
@@ -75,7 +79,7 @@ public class ProductServlet extends HttpServlet {
 		
 		// 遷移先URLの初期化：表示確認用リンクページURL（/inndex.htmlに遷移）
 		String nextURL = "/";
-		
+		// アプリケーションスコープに登録
 		getServletContext().setAttribute("operation", "商品管理機能");
 		
 		try (ProductDAO dao = new ProductDAO()) {
@@ -86,17 +90,13 @@ public class ProductServlet extends HttpServlet {
 			if (isNullOrEmpty(pathInfo) || pathInfo.equals(OPERATION_LIST)) {
 				// 遷移先URLを取得
 				nextURL = displayProductList(request, dao);
-				// リクエストスコープに登録
-				request.setAttribute("title", "商品一覧");
 				getServletContext().setAttribute("operation", "共通機能");
 			} else if (pathInfo.equals(OPERATION_ADD)) {
 				// 遷移先URLを取得
 				nextURL = addProduct(request, dao, action);
-				// リクエストスコープに登録
-				request.setAttribute("title", "商品登録");
-				request.setAttribute("display", "hidden");
+				
 			} else {
-				// 登録・更新・削除がここに追記されていく
+				// 更新・削除がここに追記されていく
 			}
 			
 			// 画面遷移実行オブジェクトを取得
@@ -184,18 +184,42 @@ public class ProductServlet extends HttpServlet {
 		request.setAttribute("sort", sortOrder);
 		request.setAttribute("keyword", keyword);
 		request.setAttribute("maxPrice", maxPriceString);
-		
+
+		// アプリケーションスコープに登録
+		getServletContext().setAttribute("operation", "共通機能");
+		// リクエストスコープに登録
+		request.setAttribute("title", "商品一覧");
 		// 遷移先URLの設定
 		return JSP_PRODUCT_LIST;
 		
 	}
 	
 	private String addProduct(HttpServletRequest request, ProductDAO dao, String action) {
+		// 遷移先URLの初期化
 		String nextURL = "";
 		if (isNullOrEmpty(action) || action.equals(ACTION_ENTRY)) {
 			// 登録処理初期画面表示：登録画面
 			nextURL = JSP_PRODUCT_ENTRY;
+		} else if (action.equals(ACTION_CONFIRM)) {
+			// リクエストパラメータを取得
+			String categoryIdString = request.getParameter("categoryId");
+			String name = request.getParameter("name");
+			String priceString = request.getParameter("price");
+			String quantityString = request.getParameter("quantity");
+			
+			// 検索条件をリクエストスコープに登録：検索条件の再現
+			request.setAttribute("categoryId", categoryIdString);
+			request.setAttribute("name", name);
+			request.setAttribute("price", priceString);
+			request.setAttribute("quantity", quantityString);
+			// 遷移先URLを返却
+			nextURL = JSP_PRODUCT_CONFIRM;
 		}
+		// リクエストスコープに登録
+		request.setAttribute("title", "商品登録");
+		request.setAttribute("mode", action);
+		request.setAttribute("display", "hidden");
+		// 遷移先URLを返却
 		return nextURL;
 	}
 	
