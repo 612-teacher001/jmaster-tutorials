@@ -19,4 +19,10 @@ html {
   &__small {
     font-size: small;
   }
+  &__aright {
+    text-align: right;
+  }
+  &__hidden {
+    display: none;
+  }
 }
