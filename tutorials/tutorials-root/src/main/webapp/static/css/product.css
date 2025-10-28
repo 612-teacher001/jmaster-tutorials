@@ -23,6 +23,12 @@ html footer {
   display: none;
 }
 
+.error {
+  list-style-type: none;
+  color: tomato;
+  padding: 0 0 0 0.75rem;
+}
+
 .criteria__entry {
   padding-bottom: 0.75rem;
   border-bottom: 1px solid gainsboro;
