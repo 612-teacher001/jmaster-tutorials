@@ -220,27 +220,13 @@ public class ProductServlet extends HttpServlet {
 			// リクエストパラメータの入力値チェック
 			List<String> errorList = new ArrayList<>();
 			// カテゴリIDの入力値チェック：必須入力チェック・数値チェック
-			if (!Validator.isRequired(categoryIdString)) {
-				errorList.add("カテゴリIDは必須です。");
-			} else if (!Validator.isNumeric(categoryIdString)) {
-				errorList.add("カテゴリIDは正の整数を選んでください。");
-			}
+			Validator.validateRequiredAndNumeric("カテゴリID", categoryIdString, errorList);
 			// 商品名の入力値チェック：必須入力チェック
-			if (!Validator.isRequired(name)) {
-				errorList.add("商品名は必須です。");
-			}
+			Validator.validateRequired("商品名", name, errorList);
 			// 価格の入力値チェック：必須入力チェック・数値チェック
-			if (!Validator.isRequired(priceString)) {
-				errorList.add("価格は必須です。");
-			} else if (!Validator.isNumeric(priceString)) {
-				errorList.add("価格は正の整数を入力してください。");
-			}
+			Validator.validateRequiredAndNumeric("価格", priceString, errorList);
 			// 数量の入力値チェック：必須入力チェック・数値チェック
-			if (!Validator.isRequired(quantityString)) {
-				errorList.add("数量は必須です。");
-			} else if (!Validator.isNumeric(quantityString)) {
-				errorList.add("数量は正の整数を入力してださい。");
-			}
+			Validator.validateRequiredAndNumeric("数量", quantityString, errorList);
 			
 			// エラーメッセージの有無で遷移先を分岐
 			if (errorList.size() > 0) {

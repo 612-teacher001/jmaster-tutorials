@@ -1,5 +1,7 @@
 package servlet;
 
+import java.util.List;
+
 /**
  * 入力データの妥当性検査を実行するクラス
  */
@@ -46,6 +48,32 @@ public class Validator {
 	 */
 	public static boolean isUpper(int target, int limit) {
 		return (target >= limit);
+	}
+
+	/**
+	 * 必須入力チェックと数値チェック
+	 * @param name  対象項目名
+	 * @param value 対象項目リテラル値
+	 * @param errorList エラーメッセージリスト：チェックでエラーがある場合医はメッセージが追加される
+	 */
+	public static void validateRequiredAndNumeric(String name, String value, List<String> errorList) {
+		if (!isRequired(value)) {
+			errorList.add(name + "は必須です。");
+		} else if (!isNumeric(value)) {
+			errorList.add(name + "は正の整数で入力してください。");
+		}
+	}
+
+	/**
+	 * 必須入力チェック
+	 * @param name  対象項目名
+	 * @param value 対象項目リテラル値
+	 * @param errorList エラーメッセージリスト：チェックでエラーがある場合医はメッセージが追加される
+	 */
+	public static void validateRequired(String name, String value, List<String> errorList) {
+		if (!isRequired(value)) {
+			errorList.add(name + "は必須です。");
+		}
 	}
 
 }
