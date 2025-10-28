@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -92,22 +91,18 @@ public class ProductServlet extends HttpServlet {
 				// 遷移先URLを取得
 				nextURL = displayProductList(request, dao);
 				getServletContext().setAttribute("operation", "共通機能");
-				// 画面遷移実行オブジェクトを取得
-				RequestDispatcher dispatcher = request.getRequestDispatcher(nextURL);
-				// 画面遷移
-				dispatcher.forward(request, response);
+				// フォワードで画面遷移
+				PageNavigator.forward(request, response, nextURL);
 			} else if (pathInfo.equals(OPERATION_ADD)) {
 				// 遷移先URLを取得
 				nextURL = addProduct(request, dao, action);
 				// 遷移先URLによって遷移方法を分岐：リダイレクト化フォワードの分岐
 				if (nextURL.equals(REDIRECT_PRODUCT_LIST)) {
-					// リダイレクトの場合
-					response.sendRedirect(nextURL);
+					// リダイレクトで画面遷移
+					PageNavigator.redirect(response, nextURL);
 				} else {
-					// 画面遷移実行オブジェクトを取得
-					RequestDispatcher dispatcher = request.getRequestDispatcher(nextURL);
-					// 画面遷移
-					dispatcher.forward(request, response);
+					// フォワードで画面遷移
+					PageNavigator.forward(request, response, nextURL);
 				}
 			} else {
 				// 更新・削除がここに追記されていく
