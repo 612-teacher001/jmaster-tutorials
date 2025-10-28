@@ -30,6 +30,7 @@ public class ProductDAO extends BaseDAO {
 	private static final String SQL_FIND_BY_PRICE_LESS_THAN_EQUAL_ORDER_BY_PRICE_DESC = "SELECT * FROM products WHERE price <= ? ORDER BY price DESC";
 	private static final String SQL_FIND_BY_NAME_LIKE_KEYWORD_AND_PRICE_LESS_THAN_EQUAL_ASC = "SELECT * FROM products WHERE name LIKE ? AND price <= ? ORDER BY price ASC";
 	private static final String SQL_FIND_BY_NAME_LIKE_KEYWORD_AND_PRICE_LESS_THAN_EQUAL_DESC = "SELECT * FROM products WHERE name LIKE ? AND price <= ? ORDER BY price DESC";
+	private static final String SQL_INSERT_PRODUCT = "INSERT INTO products (category_id, name, price, quantity) VALUES (?, ?, ?, ?)";
 	
 	
 	/**
@@ -39,6 +40,31 @@ public class ProductDAO extends BaseDAO {
 	public ProductDAO() throws DAOException {
 		super();
 	}
+	
+	/**
+	 * productsテーブルに商品を登録する
+	 * @param product 登録対象の商品インスタンス（商品IDは初期値「0」）
+	 * @throws DAOException データベース接続関連オブジェクトの処理でエラーが発生した場合
+	 */
+	public void save(Product product) throws DAOException {
+		
+		try (PreparedStatement pstmt = this.conn.prepareStatement(SQL_INSERT_PRODUCT)) {
+			// パラメタバインディング
+			pstmt.setInt(1, product.getCategoryId());
+			pstmt.setString(2, product.getName());
+			pstmt.setInt(3, product.getPrice());
+			pstmt.setInt(4, product.getQuantity());
+			
+			// SQLの実行
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// 例外が発生した場合：スタックトレース（必要最低限のエラー情報）を表示してDAOExceptionをスロー
+			e.printStackTrace();
+			throw new DAOException("レコードを取得に失敗しました。", e);
+		}
+	}
+
 
 	/**
 	 * productsテーブルからすべての商品を取得する

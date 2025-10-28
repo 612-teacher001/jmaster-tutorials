@@ -22,6 +22,9 @@ html footer {
 .ul__hidden {
   display: none;
 }
+.ul__visible {
+  display: block;
+}
 
 .error {
   list-style-type: none;

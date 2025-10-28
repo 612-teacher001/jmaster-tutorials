@@ -19,7 +19,7 @@
 					<form class="entry__form" action="/tutorials-root/ProductServlet/insert?action=execute" method="post">
 						<p>以下の内容で登録していいですか？</p>
 						<table border="1">
-							<tr class="ul__${requestScope.display != null ? requestScope.display : ''}">
+							<tr class="ul__${requestScope.display != null ? requestScope.display : 'visible'}">
 								<th>商品ID</th>
 								<td>${requestScope.id}</td>
 							</tr>
@@ -48,10 +48,10 @@
 						</table>
 						<button>この情報で登録</button>
 						<!-- 登録処理のservletに引き継ぐための隠しパラメータ -->
-						<input type="hidden" name="name" value="requestScope.name" />
-						<input type="hidden" name="categoryId" value="requestScope.categoryId" />
-						<input type="hidden" name="price" value="requestScope.price" />
-						<input type="hidden" name="quantity" value="requestScope.quantity" />
+						<input type="hidden" name="name" value="${requestScope.name}" />
+						<input type="hidden" name="categoryId" value="${requestScope.categoryId}" />
+						<input type="hidden" name="price" value="${requestScope.price}" />
+						<input type="hidden" name="quantity" value="${requestScope.quantity}" />
 					</form>
 				</section>
 			</article>

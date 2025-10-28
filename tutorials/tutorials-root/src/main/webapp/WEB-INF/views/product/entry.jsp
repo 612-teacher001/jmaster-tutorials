@@ -23,7 +23,7 @@
 					<form class="entry__form" action="/tutorials-root/ProductServlet/insert?action=confirm" method="post">
 						<table border="1">
 							<caption class="ul__small ul__aright">すべての項目は<em class="ul__bold">必須</em>です。</caption>
-							<tr class="ul__${requestScope.display != null ? requestScope.display : ''}">
+							<tr class="ul__${requestScope.display != null ? requestScope.display : 'visible'}">
 								<th>商品ID</th>
 								<td>${requestScope.id}</td>
 							</tr>
