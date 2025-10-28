@@ -11,11 +11,11 @@
 		<jsp:include page="../common/header.jsp" />
 		<main>
 			<article class="insert">
-				<h2>商品登録</h2>
+				<h2>${requestScope.title}</h2>
 				<section class="insert__entry">
-					<c:if test="${not empty requestScope.errors}">
+					<c:if test="${not empty requestScope.errorList}">
 						<ul class="error">
-						<c:forEach items="${requestScope.errors}" var="error">
+						<c:forEach items="${requestScope.errorList}" var="error">
 							<li>${error}</li>
 						</c:forEach>
 						</ul>
@@ -68,7 +68,7 @@
 				</section>
 			</article>
 		</main>
-		
+
 		<!-- ページフッタ要素領域 -->
 		<jsp:include page="../common/footer.jsp" />
 	</body>
