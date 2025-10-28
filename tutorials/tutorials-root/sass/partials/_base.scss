@@ -25,6 +25,9 @@ html {
   &__hidden {
     display: none;
   }
+  &__visible {
+    display: block;
+  }
 }
 
 .error {
