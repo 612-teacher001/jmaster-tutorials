@@ -32,7 +32,7 @@ public class ProductServlet extends HttpServlet {
 	 * クラス定数
 	 */
 	// 遷移先URL
-	private static final String REDIRECT_PRODUCT_LIST = "/ProductServlet/list";
+	private static final String REDIRECT_PRODUCT_LIST = "/tutorials-root/ProductServlet/list";
 	private static final String JSP_PRODUCT_DIR = "/WEB-INF/views/product"; 
 	private static final String JSP_PRODUCT_LIST = JSP_PRODUCT_DIR + "/list.jsp";
 	private static final String JSP_PRODUCT_ENTRY = JSP_PRODUCT_DIR + "/entry.jsp";
@@ -43,6 +43,7 @@ public class ProductServlet extends HttpServlet {
 	// actionキー定数
 	private static final String ACTION_ENTRY = "entry";
 	private static final String ACTION_CONFIRM = "confirm";
+	private static final Object ACTION_EXECUTE = "execute";
 
 	
 	@Override
@@ -91,19 +92,27 @@ public class ProductServlet extends HttpServlet {
 				// 遷移先URLを取得
 				nextURL = displayProductList(request, dao);
 				getServletContext().setAttribute("operation", "共通機能");
+				// 画面遷移実行オブジェクトを取得
+				RequestDispatcher dispatcher = request.getRequestDispatcher(nextURL);
+				// 画面遷移
+				dispatcher.forward(request, response);
 			} else if (pathInfo.equals(OPERATION_ADD)) {
 				// 遷移先URLを取得
 				nextURL = addProduct(request, dao, action);
-				
+				// 遷移先URLによって遷移方法を分岐：リダイレクト化フォワードの分岐
+				if (nextURL.equals(REDIRECT_PRODUCT_LIST)) {
+					// リダイレクトの場合
+					response.sendRedirect(nextURL);
+				} else {
+					// 画面遷移実行オブジェクトを取得
+					RequestDispatcher dispatcher = request.getRequestDispatcher(nextURL);
+					// 画面遷移
+					dispatcher.forward(request, response);
+				}
 			} else {
 				// 更新・削除がここに追記されていく
 			}
-			
-			// 画面遷移実行オブジェクトを取得
-			RequestDispatcher dispatcher = request.getRequestDispatcher(nextURL);
-			// 画面遷移
-			dispatcher.forward(request, response);
-			
+					
 		} catch (DAOException | NumberFormatException e) {
 			// 例外が発生した場合：スタックトレース（必要最低限のエラー情報）を表示
 			e.printStackTrace();
@@ -194,7 +203,7 @@ public class ProductServlet extends HttpServlet {
 		
 	}
 	
-	private String addProduct(HttpServletRequest request, ProductDAO dao, String action) {
+	private String addProduct(HttpServletRequest request, ProductDAO dao, String action) throws DAOException {
 		// 遷移先URLの初期化
 		String nextURL = "";
 		if (isNullOrEmpty(action) || action.equals(ACTION_ENTRY)) {
@@ -249,6 +258,26 @@ public class ProductServlet extends HttpServlet {
 			
 			// 遷移先URLを返却
 			nextURL = JSP_PRODUCT_CONFIRM;
+		} else if (action.equals(ACTION_EXECUTE)) {
+			// リクエストパラメータを取得
+			String categoryIdString = request.getParameter("categoryId");
+			String name = request.getParameter("name");
+			String priceString = request.getParameter("price");
+			String quantityString = request.getParameter("quantity");
+			
+			// リクエストパラメータをデータ型変換
+			int categoryId = Integer.parseInt(categoryIdString);
+			int price = Integer.parseInt(priceString);
+			int quantity = Integer.parseInt(quantityString);
+			
+			// 登録対象商品をインスタンス化
+			Product target = new Product(categoryId, name, price, quantity);
+			
+			// 商品を登録
+			dao.save(target);
+			
+			// 商品一覧にリダイレクト：/tutorials-root/ProdductServlet/listを呼び出す
+			return REDIRECT_PRODUCT_LIST;
 		}
 		// リクエストスコープに登録
 		request.setAttribute("title", "商品登録");
