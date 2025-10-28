@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
@@ -32,7 +33,6 @@ public class ProductServlet extends HttpServlet {
 	 */
 	// 遷移先URL
 	private static final String REDIRECT_PRODUCT_LIST = "/ProductServlet/list";
-	private static final String URL_PRODUCT_ENRTY = "/ProductServlet/insert";
 	private static final String JSP_PRODUCT_DIR = "/WEB-INF/views/product"; 
 	private static final String JSP_PRODUCT_LIST = JSP_PRODUCT_DIR + "/list.jsp";
 	private static final String JSP_PRODUCT_ENTRY = JSP_PRODUCT_DIR + "/entry.jsp";
@@ -212,6 +212,41 @@ public class ProductServlet extends HttpServlet {
 			request.setAttribute("name", name);
 			request.setAttribute("price", priceString);
 			request.setAttribute("quantity", quantityString);
+			
+			// リクエストパラメータの入力値チェック
+			List<String> errorList = new ArrayList<>();
+			// カテゴリIDの入力値チェック：必須入力チェック・数値チェック
+			if (!Validator.isRequired(categoryIdString)) {
+				errorList.add("カテゴリIDは必須です。");
+			} else if (!Validator.isNumeric(categoryIdString)) {
+				errorList.add("カテゴリIDは正の整数を選んでください。");
+			}
+			// 商品名の入力値チェック：必須入力チェック
+			if (!Validator.isRequired(name)) {
+				errorList.add("商品名は必須です。");
+			}
+			// 価格の入力値チェック：必須入力チェック・数値チェック
+			if (!Validator.isRequired(priceString)) {
+				errorList.add("価格は必須です。");
+			} else if (!Validator.isNumeric(priceString)) {
+				errorList.add("価格は正の整数を入力してください。");
+			}
+			// 数量の入力値チェック：必須入力チェック・数値チェック
+			if (!Validator.isRequired(quantityString)) {
+				errorList.add("数量は必須です。");
+			} else if (!Validator.isNumeric(quantityString)) {
+				errorList.add("数量は正の整数を入力してださい。");
+			}
+			
+			// エラーメッセージの有無で遷移先を分岐
+			if (errorList.size() > 0) {
+				request.setAttribute("errorList", errorList);
+				request.setAttribute("title", "商品登録");
+				request.setAttribute("display", "hidden");
+				nextURL = JSP_PRODUCT_ENTRY;
+				return nextURL;
+			}
+			
 			// 遷移先URLを返却
 			nextURL = JSP_PRODUCT_CONFIRM;
 		}
